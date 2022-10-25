@@ -5,10 +5,31 @@
  */
 package controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+
 /**
  *
  * @author somor
  */
-public class Controller_Log {
-    
+public class Controller_Log implements Initializable {
+
+    @FXML
+    private Button btnSignOut;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+
+    }
+
+    @FXML
+
+    private void hadleButtonSignOut(ActionEvent event) {
+             
+    }
 }
