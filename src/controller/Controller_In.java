@@ -4,11 +4,15 @@
  */
 package controller;
 
+import exceptions.NotAceptSpace;
+import exceptions.ValidateUserPass;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +23,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  *
@@ -46,6 +50,8 @@ public class Controller_In implements Initializable {
         // TODO
 
         btnSignIn.setOnAction(this::hadleButtonSignIn);
+        btnSignUp.setOnAction(this::hadleButtonSignUp);
+        limitPasswordUser();
     }
 
     @FXML
@@ -67,25 +73,40 @@ public class Controller_In implements Initializable {
          *
          */
         //logger.info("hey");
-        boolean hayEspacios = false;
-        boolean hayLimiteCaracteres = false;
-        /* 
-             * boolean coincide = false;
-             * hayLimiteCaracteres = limitCharacter();
-             * coincide = matchUserPass();
-             * 
-         */
-       hayEspacios = noSpace();
-       hayLimiteCaracteres = limitCharacter();
+        boolean hayEspacios = true;
+        boolean coincide = true;
 
-        if (!hayEspacios) {
+        try {
+            coincide = matchUserPass(coincide);
+
+        } catch (ValidateUserPass ex) {
+            System.out.println("Usuario y contraseña erroneos");
+            Logger.getLogger("Usuario y contraseña erroneos");
+        }
+
+        try {
+            hayEspacios = noSpace();
+        } catch (NotAceptSpace ex) {
+            System.out.println("Error hay espacios");
+            Logger.getLogger("Error Hay espacios");
+        }
+
+        
+
+        if (!coincide &&!hayEspacios) {
             windowsOut();
         }
+        if(coincide){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
+            alert.show();
+            
+        }
+        
 
     }
 
-    private boolean noSpace() {
-        String  user = txtFieldUser.getText();
+    private boolean noSpace() throws NotAceptSpace {
+        String user = txtFieldUser.getText();
         String pass = txtFieldPassword.getText();
         String letraU;
         String letraP;
@@ -106,44 +127,47 @@ public class Controller_In implements Initializable {
         }
 
         if (esta) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Hay espacios", ButtonType.OK);
-            alert.show();
-            System.out.println("Error hay espacios");
+            //Alert alert = new Alert(Alert.AlertType.ERROR, "Hay espacios", ButtonType.OK);
+            //alert.show();
+            throw new NotAceptSpace("Error Hay espacios");
 
-        } else {
-            System.out.println("No hay espacios");
         }
 
         return esta;
     }
 
-    private boolean limitCharacter() {
-        boolean esta = false;
-        if (txtFieldUser.getText().length() >= 25 || txtFieldPassword.getText().length() >= 10) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Has sobrepasado el limite de Caracteres", ButtonType.OK);
-            alert.show();
-            esta = true;
-
-        }
-        return esta;
-    }
-
-    private boolean matchUserPass() {
-
-        boolean coincide = true;
-        if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldUser.getText().toString().equalsIgnoreCase("pass")) {
+    private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
+        //Comprueba si el user y la pass coinciden con la base de datos
+        if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldPassword.getText().toString().equalsIgnoreCase("pass")) {
             coincide = false;
+
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
-            alert.show();
+            coincide = true;
+            //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
+            //alert.show();
+            throw new ValidateUserPass("User o Password Erroneos");
         }
         return coincide;
     }
 
     @FXML
-    private void hadleButtonSignUp(WindowEvent event) {
-        //logger.info("hey");
+    private void hadleButtonSignUp(ActionEvent event) {
+        //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
+        try {
+            //Navega a la otra ventana cuando el usuario se llega a conectar
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage1 = new Stage();
+            stage1.setScene(scene);
+            stage1.setResizable(false);
+
+            stage1.initModality(Modality.APPLICATION_MODAL);
+            stage1.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void windowsOut() {
@@ -155,9 +179,39 @@ public class Controller_In implements Initializable {
             Scene scene = new Scene(root);
             Stage stage1 = new Stage();
             stage1.setScene(scene);
+            stage1.setTitle("Log In");
+            stage1.setResizable(false);
+            
+            stage1.initModality(Modality.APPLICATION_MODAL);
             stage1.show();
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void limitPasswordUser() {
+        txtFieldUser.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
+                if (txtFieldUser.getText().length() > 25) {
+                    txtFieldUser.setText(txtFieldUser.getText().substring(0, 25));
+
+                }
+
+            }
+
+        });
+
+        txtFieldPassword.lengthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
+                if (txtFieldPassword.getText().length() > 10) {
+                    txtFieldPassword.setText(txtFieldPassword.getText().substring(0, 10));
+
+                }
+
+            }
+
+        });
     }
 }
