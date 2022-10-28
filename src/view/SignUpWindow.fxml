@@ -2,14 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #B0BEC5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #B0BEC5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller_Up">
    <children>
       <Label fx:id="labelLogin" layoutX="470.0" layoutY="72.0" prefHeight="27.0" prefWidth="55.0" text="Login :" AnchorPane.bottomAnchor="620.0" AnchorPane.leftAnchor="470.0">
-         <font>
+          <font>
             <Font size="18.0" />
          </font>
       </Label>
@@ -28,10 +29,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFieldPassword" layoutX="924.0" layoutY="438.0" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-      <TextField fx:id="txtFieldLogin" layoutX="450.0" layoutY="118.0" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-      <TextField fx:id="txtFieldGmail" layoutX="881.0" layoutY="283.0" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="370.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-      <TextField fx:id="txtFieldFullName" layoutX="351.0" layoutY="223.0" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
+      <TextField fx:id="txtFieldLogin" layoutX="450.0" layoutY="118.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />      
+      <TextField fx:id="txtFieldGmail" layoutX="881.0" layoutY="283.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="370.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
+      <TextField fx:id="txtFieldFullName" layoutX="351.0" layoutY="223.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
       <Button fx:id="btnSignUp" layoutX="472.0" layoutY="582.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="115.0" text="SIGN UP" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="450.0">
          <font>
             <Font size="18.0" />
@@ -47,6 +47,32 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtConfirmPassword" layoutX="526.0" layoutY="533.0" prefHeight="30.0" prefWidth="402.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
+      <Label fx:id="labelLoginError" layoutX="615.0" layoutY="73.0" prefHeight="27.0" prefWidth="230.0" text="* Campo mal introducido" textFill="RED" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="375.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelFullNameError" layoutX="614.0" layoutY="171.0" prefHeight="27.0" prefWidth="55.0" text="* Campo mal introducido" textFill="RED" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="375.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelGmailError" layoutX="622.0" layoutY="273.0" prefHeight="27.0" prefWidth="55.0" text="* Campo mal introducido" textFill="RED" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="375.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPasswordError" layoutX="615.0" layoutY="372.0" prefHeight="27.0" prefWidth="55.0" text="* Campo mal introducido" textFill="RED" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="375.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelPasswordLoginError" layoutX="687.0" layoutY="472.0" prefHeight="27.0" prefWidth="219.0" text="* Campo mal introducido" textFill="RED" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="375.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtFieldPassword" layoutX="438.0" layoutY="426.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0"  />
+      <PasswordField fx:id="txtFieldConfrimPassword" layoutX="450.0" layoutY="515.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
    </children>
 </AnchorPane>
