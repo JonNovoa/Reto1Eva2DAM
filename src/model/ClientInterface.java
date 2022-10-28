@@ -5,10 +5,15 @@
  */
 package model;
 
+import clases.Client;
+
 /**
  *
  * @author somor
  */
 public interface ClientInterface {
+    public void registerClient(Client user);
+    public void closeSession();
+    public void logIn(Client user);
     
 }

@@ -5,10 +5,28 @@
  */
 package model;
 
+import clases.Client;
+
 /**
  *
  * @author somor
  */
-public class ImplementationClient {
+public class ImplementationClient implements ClientInterface {
+
+    @Override
+    public void registerClient(Client user) {
+
+    }
+
+    @Override
+    public void closeSession() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void logIn(Client user) {
+        
+    }
+    
     
 }

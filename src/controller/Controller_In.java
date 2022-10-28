@@ -4,6 +4,7 @@
  */
 package controller;
 
+import clases.Client;
 import exceptions.NotAceptSpace;
 import exceptions.ValidateUserPass;
 import java.io.IOException;
@@ -17,14 +18,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.ClientInterface;
+import model.ImplementationClient;
 
 /**
  *
@@ -48,7 +53,7 @@ public class Controller_In implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+//Vinculamos los botones para el funcionamiento y sus condiciones
         btnSignIn.setOnAction(this::hadleButtonSignIn);
         btnSignUp.setOnAction(this::hadleButtonSignUp);
         limitPasswordUser();
@@ -75,6 +80,8 @@ public class Controller_In implements Initializable {
         //logger.info("hey");
         boolean hayEspacios = true;
         boolean coincide = true;
+        Client user= new Client();
+        user=saveLogin();
 
         try {
             coincide = matchUserPass(coincide);
@@ -91,17 +98,15 @@ public class Controller_In implements Initializable {
             Logger.getLogger("Error Hay espacios");
         }
 
+        if (!coincide && !hayEspacios) {
         
-
-        if (!coincide &&!hayEspacios) {
-            windowsOut();
+            windowsOut(user,event);
         }
-        if(coincide){
+        if (coincide) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
             alert.show();
-            
+
         }
-        
 
     }
 
@@ -164,30 +169,33 @@ public class Controller_In implements Initializable {
             stage1.setResizable(false);
 
             stage1.initModality(Modality.APPLICATION_MODAL);
-            stage1.show();
+            stage1.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void windowsOut() {
+    private void windowsOut(Client user, ActionEvent event) {
         try {
             //Navega a la otra ventana cuando el usuario se llega a conectar
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignOutWindow.fxml"));
+            Controller_Log controlador = new Controller_Log();
+            controlador.setUsuario(user);
+            loader.setController(controlador);
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            Stage stage1 = new Stage();
+            Stage stage1 =new Stage();
             stage1.setScene(scene);
             stage1.setTitle("Log In");
             stage1.setResizable(false);
-            
             stage1.initModality(Modality.APPLICATION_MODAL);
-            stage1.show();
+            stage1.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+//Limitamos el user a 25 caracteres y password a 10 caracteres 
 
     private void limitPasswordUser() {
         txtFieldUser.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -213,5 +221,14 @@ public class Controller_In implements Initializable {
             }
 
         });
+    }
+
+    private Client  saveLogin() {
+        ImplementationClient login= new ImplementationClient();
+        Client user = new Client();
+        user.setLogin(txtFieldUser.getText());
+        user.setPasswd(txtFieldPassword.getText());
+        //login.logIn(user);
+         return user; 
     }
 }
