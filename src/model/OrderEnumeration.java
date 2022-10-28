@@ -10,5 +10,5 @@ package model;
  * @author somor
  */
 public enum OrderEnumeration {
-    
+    IN,UP
 }

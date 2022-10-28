@@ -6,6 +6,7 @@
 package model;
 
 import clases.Client;
+import clases.Message;
 
 /**
  *
@@ -25,6 +26,10 @@ public class ImplementationClient implements ClientInterface {
 
     @Override
     public void logIn(Client user) {
+        OrderEnumeration ORDER = OrderEnumeration.IN;
+        Message mensaje= new Message();
+        mensaje.makeMessage(user, ORDER);
+        
         
     }
     

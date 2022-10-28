@@ -4,6 +4,7 @@
  */
 package application;
 
+import controller.Controller_In;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +20,13 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
         FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/SignInWindow.fxml"));
         Parent root = loader.load();
-        Scene scene= new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("Sign In");
-        stage.show();
+        Controller_In controlador= loader.getController();
+        controlador.setStage(primaryStage);
+        controlador.initStage(root);
+       
        
     }
 

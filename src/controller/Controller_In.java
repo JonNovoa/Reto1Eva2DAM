@@ -54,14 +54,32 @@ public class Controller_In implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 //Vinculamos los botones para el funcionamiento y sus condiciones
+
+
         btnSignIn.setOnAction(this::hadleButtonSignIn);
         btnSignUp.setOnAction(this::hadleButtonSignUp);
         limitPasswordUser();
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+      public void initStage(Parent root) {
+    Scene scene= new Scene(root);
+        Stage stage1 = new Stage();
+        stage1.setScene(scene);
+        stage1.setResizable(false);
+        stage1.setTitle("Sign In");
+        stage1.show();
+        }
+    //Valida el user y la password
+    
     @FXML
     private void hadleButtonSignIn(ActionEvent event) {
-
         //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
         //alert.show();
         /**
@@ -82,34 +100,26 @@ public class Controller_In implements Initializable {
         boolean coincide = true;
         Client user= new Client();
         user=saveLogin();
-
         try {
             coincide = matchUserPass(coincide);
-
         } catch (ValidateUserPass ex) {
             System.out.println("Usuario y contraseña erroneos");
             Logger.getLogger("Usuario y contraseña erroneos");
         }
-
         try {
             hayEspacios = noSpace();
         } catch (NotAceptSpace ex) {
             System.out.println("Error hay espacios");
             Logger.getLogger("Error Hay espacios");
         }
-
-        if (!coincide && !hayEspacios) {
-        
+        if (!coincide && !hayEspacios) {     
             windowsOut(user,event);
         }
         if (coincide) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
             alert.show();
-
         }
-
     }
-
     private boolean noSpace() throws NotAceptSpace {
         String user = txtFieldUser.getText();
         String pass = txtFieldPassword.getText();
@@ -130,22 +140,23 @@ public class Controller_In implements Initializable {
                 esta = true;
             }
         }
-
         if (esta) {
             //Alert alert = new Alert(Alert.AlertType.ERROR, "Hay espacios", ButtonType.OK);
             //alert.show();
             throw new NotAceptSpace("Error Hay espacios");
-
         }
-
         return esta;
     }
 
     private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
+        ClientInterface login = new  ImplementationClient();
+        Client user= new Client();
+        user.setLogin(txtFieldUser.getText());
+        user.setPasswd(txtFieldPassword.getText());
+        login.logIn(user);
         //Comprueba si el user y la pass coinciden con la base de datos
         if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldPassword.getText().toString().equalsIgnoreCase("pass")) {
             coincide = false;
-
         } else {
             coincide = true;
             //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
@@ -154,27 +165,23 @@ public class Controller_In implements Initializable {
         }
         return coincide;
     }
-
     @FXML
     private void hadleButtonSignUp(ActionEvent event) {
         //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
         try {
             //Navega a la otra ventana cuando el usuario se llega a conectar
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage1 = new Stage();
             stage1.setScene(scene);
             stage1.setResizable(false);
-
             stage1.initModality(Modality.APPLICATION_MODAL);
             stage1.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     private void windowsOut(Client user, ActionEvent event) {
         try {
             //Navega a la otra ventana cuando el usuario se llega a conectar
@@ -196,33 +203,25 @@ public class Controller_In implements Initializable {
         }
     }
 //Limitamos el user a 25 caracteres y password a 10 caracteres 
-
     private void limitPasswordUser() {
         txtFieldUser.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
                 if (txtFieldUser.getText().length() > 25) {
                     txtFieldUser.setText(txtFieldUser.getText().substring(0, 25));
-
                 }
-
             }
-
         });
-
         txtFieldPassword.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
                 if (txtFieldPassword.getText().length() > 10) {
                     txtFieldPassword.setText(txtFieldPassword.getText().substring(0, 10));
-
                 }
-
             }
 
         });
     }
-
     private Client  saveLogin() {
         ImplementationClient login= new ImplementationClient();
         Client user = new Client();
@@ -231,4 +230,6 @@ public class Controller_In implements Initializable {
         //login.logIn(user);
          return user; 
     }
+
+  
 }

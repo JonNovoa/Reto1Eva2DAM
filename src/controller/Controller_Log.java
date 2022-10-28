@@ -9,7 +9,6 @@ import clases.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -38,6 +37,7 @@ public class Controller_Log implements Initializable {
         
        // labelCongrat.setText("Hey quepassss!!!!!!!!!!!!!!");
         btnSignOut.setOnAction(this::hadleButtonSignOut);
+    
     }
 
     @FXML
