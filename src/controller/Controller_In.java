@@ -18,15 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ClientInterface;
 import model.ImplementationClient;
@@ -55,7 +52,6 @@ public class Controller_In implements Initializable {
         // TODO
 //Vinculamos los botones para el funcionamiento y sus condiciones
 
-
         btnSignIn.setOnAction(this::hadleButtonSignIn);
         btnSignUp.setOnAction(this::hadleButtonSignUp);
         limitPasswordUser();
@@ -68,16 +64,17 @@ public class Controller_In implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-      public void initStage(Parent root) {
-    Scene scene= new Scene(root);
+
+    public void initStage(Parent root) {
+        Scene scene = new Scene(root);
         Stage stage1 = new Stage();
         stage1.setScene(scene);
         stage1.setResizable(false);
         stage1.setTitle("Sign In");
         stage1.show();
-        }
+    }
     //Valida el user y la password
-    
+
     @FXML
     private void hadleButtonSignIn(ActionEvent event) {
         //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
@@ -98,8 +95,8 @@ public class Controller_In implements Initializable {
         //logger.info("hey");
         boolean hayEspacios = true;
         boolean coincide = true;
-        Client user= new Client();
-        user=saveLogin();
+        Client user = new Client();
+        user = saveLogin();
         try {
             coincide = matchUserPass(coincide);
         } catch (ValidateUserPass ex) {
@@ -112,14 +109,15 @@ public class Controller_In implements Initializable {
             System.out.println("Error hay espacios");
             Logger.getLogger("Error Hay espacios");
         }
-        if (!coincide && !hayEspacios) {     
-            windowsOut(user,event);
+        if (!coincide && !hayEspacios) {
+            windowsOut(user, event);
         }
         if (coincide) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
             alert.show();
         }
     }
+
     private boolean noSpace() throws NotAceptSpace {
         String user = txtFieldUser.getText();
         String pass = txtFieldPassword.getText();
@@ -149,11 +147,11 @@ public class Controller_In implements Initializable {
     }
 
     private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
-        ClientInterface login = new  ImplementationClient();
-        Client user= new Client();
+        ClientInterface login = new ImplementationClient();
+        Client user = new Client();
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
-        login.logIn(user);
+         login.logIn(user);
         //Comprueba si el user y la pass coinciden con la base de datos
         if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldPassword.getText().toString().equalsIgnoreCase("pass")) {
             coincide = false;
@@ -165,6 +163,7 @@ public class Controller_In implements Initializable {
         }
         return coincide;
     }
+
     @FXML
     private void hadleButtonSignUp(ActionEvent event) {
         //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
@@ -172,16 +171,14 @@ public class Controller_In implements Initializable {
             //Navega a la otra ventana cuando el usuario se llega a conectar
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage1 = new Stage();
-            stage1.setScene(scene);
-            stage1.setResizable(false);
-            stage1.initModality(Modality.APPLICATION_MODAL);
-            stage1.showAndWait();
+            Controller_Up controlador = new Controller_Up();
+            controlador.setStage(stage);
+            controlador.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void windowsOut(Client user, ActionEvent event) {
         try {
             //Navega a la otra ventana cuando el usuario se llega a conectar
@@ -191,18 +188,15 @@ public class Controller_In implements Initializable {
             controlador.setUsuario(user);
             loader.setController(controlador);
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage1 =new Stage();
-            stage1.setScene(scene);
-            stage1.setTitle("Log In");
-            stage1.setResizable(false);
-            stage1.initModality(Modality.APPLICATION_MODAL);
-            stage1.showAndWait();
+            controlador = loader.getController();
+            controlador.setStage(stage);
+            controlador.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 //Limitamos el user a 25 caracteres y password a 10 caracteres 
+
     private void limitPasswordUser() {
         txtFieldUser.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -222,14 +216,14 @@ public class Controller_In implements Initializable {
 
         });
     }
-    private Client  saveLogin() {
-        ImplementationClient login= new ImplementationClient();
+
+    private Client saveLogin() {
+        ImplementationClient login = new ImplementationClient();
         Client user = new Client();
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
         //login.logIn(user);
-         return user; 
+        return user;
     }
 
-  
 }

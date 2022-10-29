@@ -7,6 +7,7 @@ package model;
 
 import clases.Client;
 import clases.Message;
+import sockets.ClientSocket;
 
 /**
  *
@@ -16,7 +17,10 @@ public class ImplementationClient implements ClientInterface {
 
     @Override
     public void registerClient(Client user) {
-
+        OrderEnumeration ORDER = OrderEnumeration.UP;
+        Message mensaje= new Message();
+        mensaje.makeMessage(user, ORDER);
+        //ClientSocket socket= new ClientSocket(mensaje);
     }
 
     @Override
@@ -29,6 +33,9 @@ public class ImplementationClient implements ClientInterface {
         OrderEnumeration ORDER = OrderEnumeration.IN;
         Message mensaje= new Message();
         mensaje.makeMessage(user, ORDER);
+       // ClientSocket socket= new ClientSocket(mensaje);
+        
+        
         
         
     }

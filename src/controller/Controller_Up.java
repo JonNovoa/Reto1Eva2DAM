@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -41,7 +40,7 @@ public class Controller_Up implements Initializable {
 
     @FXML
     private Stage stage;
-    
+
     @FXML
     private Label label;
 
@@ -86,18 +85,16 @@ public class Controller_Up implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
-public void initStage(Parent root){
-    Stage stage1= this.stage;
-    Scene scene1=new Scene(root);
-    stage1.setScene(scene1);
-    
-    stage1.setResizable(false);
 
-            stage1.initModality(Modality.APPLICATION_MODAL);
-           stage1.showAndWait();
-    
-}
+    public void initStage(Parent root) {
+        Stage stage1 = new Stage();
+        Scene scene = new Scene(root);
+        stage1.setScene(scene);
+        stage1.setResizable(false);
+        stage1.initModality(Modality.APPLICATION_MODAL);
+        stage1.showAndWait();
+
+    }
 
     public void keyReleasedProperty() {
 
@@ -134,45 +131,50 @@ public void initStage(Parent root){
      * realizado correctamente se notificará al usuario con un aviso y el cual
      * al cerrarlo le llevará a la ventana de principal (SignIn) esta ventana se
      * cerrará
-*
+     *
      */
     @FXML
     private void handleButtonSignUp(ActionEvent event) {
         try {
             checkFullName();
             /**
-             * hideAlerts();
-             * if (checkLogin() == false) {
-             * logMsg.log(Level.INFO, "login incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Login error \n Must have: \n minimum 3 characters length \n no spaces", "Error", JOptionPane.OK_OPTION);
-             * labelLoginError.setStyle("-fx-text-fill:RED");
-             * }
-             * **/
+             * hideAlerts(); if (checkLogin() == false) { logMsg.log(Level.INFO,
+             * "login incorrecto "); JOptionPane.showMessageDialog(null, "Login
+             * error \n Must have: \n minimum 3 characters length \n no spaces",
+             * "Error", JOptionPane.OK_OPTION);
+             * labelLoginError.setStyle("-fx-text-fill:RED"); }
+             * *
+             */
             /**
-             * if (checkFullName() == false) {
-             * //LOGGER.log(Level.SEVERE, errorMsg);
-             * logMsg.log(Level.INFO, "full name incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Full name error \n Must have: \n minimum 8 letters length", "Error", JOptionPane.OK_OPTION);
-             * labelFullNameError.setStyle("-fx-text-fill:RED");
-             * } else if (checkEmail() == false) {
-             * logMsg.log(Level.INFO, "email incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Email format incorrect \n Example: andrew@example.com", "Error", JOptionPane.OK_OPTION);
-             * labelGmailError.setStyle("-fx-text-fill:RED");
-             * } else if (checkPassword() == false) {
-             * logMsg.log(Level.INFO, "password incorrecto");
-             * JOptionPane.showMessageDialog(null, "Password error \nMust have: \n minimum 4 characters length", "Error", JOptionPane.OK_OPTION);
-             * labelPasswordError.setStyle("-fx-text-fill:RED");
-             * } else if (checkConfirmPasword() == false) {
-             * logMsg.log(Level.INFO, "confirm password incorrecto");
-             * JOptionPane.showMessageDialog(null, "\"Password Confirm error\nMust be: \n equals to Password", "Error", JOptionPane.OK_OPTION);
-             * labelPasswordLoginError.setStyle("-fx-text-fill:RED");
-             * } else {
-             * 
-             * createUser();
-             * closeWindow(event);
-             * 
+             * if (checkFullName() == false) { //LOGGER.log(Level.SEVERE,
+             * errorMsg); logMsg.log(Level.INFO, "full name incorrecto ");
+             * JOptionPane.showMessageDialog(null, "Full name error \n Must
+             * have: \n minimum 8 letters length", "Error",
+             * JOptionPane.OK_OPTION);
+             * labelFullNameError.setStyle("-fx-text-fill:RED"); } else if
+             * (checkEmail() == false) { logMsg.log(Level.INFO, "email
+             * incorrecto "); JOptionPane.showMessageDialog(null, "Email format
+             * incorrect \n Example: andrew@example.com", "Error",
+             * JOptionPane.OK_OPTION);
+             * labelGmailError.setStyle("-fx-text-fill:RED"); } else if
+             * (checkPassword() == false) { logMsg.log(Level.INFO, "password
+             * incorrecto"); JOptionPane.showMessageDialog(null, "Password error
+             * \nMust have: \n minimum 4 characters length", "Error",
+             * JOptionPane.OK_OPTION);
+             * labelPasswordError.setStyle("-fx-text-fill:RED"); } else if
+             * (checkConfirmPasword() == false) { logMsg.log(Level.INFO,
+             * "confirm password incorrecto");
+             * JOptionPane.showMessageDialog(null, "\"Password Confirm
+             * error\nMust be: \n equals to Password", "Error",
+             * JOptionPane.OK_OPTION);
+             * labelPasswordLoginError.setStyle("-fx-text-fill:RED"); } else {
+             *
+             * createUser(); closeWindow(event);
+             *
              * }
-             **/     } catch (FullNameException ex) {
+             *
+             */
+        } catch (FullNameException ex) {
             Logger.getLogger(Controller_Up.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -181,13 +183,13 @@ public void initStage(Parent root){
     /**
      * Te preguntará si estas seguro si quieres cancelar el registro de usuario
      * Te llevará la ventana Principal y esta se cerrará
-*
+     *
      */
     @FXML
     private void handleButtonCancel(ActionEvent event) {
 
-JOptionPane.showConfirmDialog(null, "do you want to get out of the window?", "Alert!", JOptionPane.YES_NO_OPTION);        
-closeWindow(event);
+        JOptionPane.showConfirmDialog(null, "do you want to get out of the window?", "Alert!", JOptionPane.YES_NO_OPTION);
+        closeWindow(event);
 
     }
 
@@ -240,30 +242,20 @@ closeWindow(event);
         } else {
             return false;
         }
-    
-}
-    /**
-    private boolean checkLogin() {
 
-        String cadena = txtFieldLogin.getText();
-        int espacios = 0;
-        if (cadena.length() > 2) {
-            for (int i = 0; i < cadena.length(); i++) {
-                if (cadena.charAt(i) == ' ') {
-                    espacios++;
-                }
-            }
-        } else {
-            espacios = -1;
-        }
-        if (espacios == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    
-}
- **/   
+    }
+
+    /**
+     * private boolean checkLogin() {
+     *
+     * String cadena = txtFieldLogin.getText(); int espacios = 0; if
+     * (cadena.length() > 2) { for (int i = 0; i < cadena.length(); i++) { if
+     * (cadena.charAt(i) == ' ') { espacios++; } } } else { espacios = -1; } if
+     * (espacios == 0) { return true; } else { return false; }
+     *
+     * }
+     *
+     */
 
     private void checkFullName() throws FullNameException {
 
@@ -275,14 +267,13 @@ closeWindow(event);
 
         Matcher macther = pattern.matcher(nombre);
         for (int i = 0; i < nombre.length(); i++) {
-            
+
             if (nombre.charAt(i) != ' ') {
-                
+
                 letras++;
             }
             throw new FullNameException("");
         }
-
 
     }
 
