@@ -28,6 +28,7 @@ public class ClientSocket {
      * Crea el socket con el mensaje que le va a mandar al servidor
      * @param mensaje 
      */
+    
     public ClientSocket(Message mensaje) {
         try {
             Socket skCliente = new Socket(HOST, PUERTO);

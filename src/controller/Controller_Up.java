@@ -143,7 +143,6 @@ public class Controller_Up implements Initializable {
      * al cerrarlo le llevará a la ventana de principal (SignIn) esta ventana se
      * cerrará
      *
-     * @param event
      */
     @FXML
     private void handleButtonSignUp(ActionEvent event) {
