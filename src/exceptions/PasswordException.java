@@ -5,33 +5,26 @@
  */
 package exceptions;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author somor
  */
-public class FullNameException extends Exception {
+public class PasswordException extends Exception {
 
     /**
-     * Creates a new instance of <code>FullNameException</code> without detail
+     * Creates a new instance of <code>PasswordException</code> without detail
      * message.
      */
-    public FullNameException() {
-        
-       
+    public PasswordException() {
     }
 
     /**
-     * Constructs an instance of <code>FullNameException</code> with the
+     * Constructs an instance of <code>PasswordException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    
-    public FullNameException(String msg) {
-        super("error");
+    public PasswordException(String msg) {
+        super(msg);
     }
-     
-    
 }
