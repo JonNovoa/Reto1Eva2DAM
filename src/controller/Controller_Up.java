@@ -7,7 +7,9 @@ package controller;
 
 import clases.Client;
 
+import exceptions.*;
 import exceptions.FullNameException;
+import exceptions.LoginException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -33,17 +35,14 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author somor
+ * @author Jon Novoa
  */
 public class Controller_Up implements Initializable {
 
-    private static final Logger logMsg = Logger.getLogger("gadfadf");
+    private static final Logger logMsg = Logger.getLogger("");
 
     @FXML
     private Stage stage;
-    
-    @FXML
-    private Label label;
 
     @FXML
     private TextField txtFieldLogin;
@@ -86,19 +85,24 @@ public class Controller_Up implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
-public void initStage(Parent root){
-    Stage stage1= this.stage;
-    Scene scene1=new Scene(root);
-    stage1.setScene(scene1);
-    
-    stage1.setResizable(false);
 
-            stage1.initModality(Modality.APPLICATION_MODAL);
-           stage1.showAndWait();
-    
-}
+    public void initStage(Parent root) {
+        Stage stage1 = this.stage;
+        Scene scene1 = new Scene(root);
+        stage1.setScene(scene1);
 
+        stage1.setResizable(false);
+
+        stage1.initModality(Modality.APPLICATION_MODAL);
+        stage1.showAndWait();
+
+    }
+
+    /**
+     * Comprueba el estado de los campos , si hay alguno vacio el boton de Sign
+     * Up estara desactivado, en el momento que se rellenen todo los campos se
+     * activara
+     */
     public void keyReleasedProperty() {
 
         if (txtFieldLogin.getText().isEmpty() || txtFieldFullName.getText().isEmpty() || txtFieldGmail.getText().isEmpty() || txtFieldPassword.getText().isEmpty() || txtFieldConfrimPassword.getText().isEmpty()) {
@@ -109,6 +113,12 @@ public void initStage(Parent root){
         }
     }
 
+    /**
+     *
+     * @param event
+     *
+     * metodo para cerrar la ventana
+     */
     private void closeWindow(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
@@ -134,60 +144,56 @@ public void initStage(Parent root){
      * realizado correctamente se notificará al usuario con un aviso y el cual
      * al cerrarlo le llevará a la ventana de principal (SignIn) esta ventana se
      * cerrará
-*
+     *
+     * @param event
      */
     @FXML
     private void handleButtonSignUp(ActionEvent event) {
+        hideAlerts();
+
         try {
+            checkLogin();
             checkFullName();
-            /**
-             * hideAlerts();
-             * if (checkLogin() == false) {
-             * logMsg.log(Level.INFO, "login incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Login error \n Must have: \n minimum 3 characters length \n no spaces", "Error", JOptionPane.OK_OPTION);
-             * labelLoginError.setStyle("-fx-text-fill:RED");
-             * }
-             * **/
-            /**
-             * if (checkFullName() == false) {
-             * //LOGGER.log(Level.SEVERE, errorMsg);
-             * logMsg.log(Level.INFO, "full name incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Full name error \n Must have: \n minimum 8 letters length", "Error", JOptionPane.OK_OPTION);
-             * labelFullNameError.setStyle("-fx-text-fill:RED");
-             * } else if (checkEmail() == false) {
-             * logMsg.log(Level.INFO, "email incorrecto ");
-             * JOptionPane.showMessageDialog(null, "Email format incorrect \n Example: andrew@example.com", "Error", JOptionPane.OK_OPTION);
-             * labelGmailError.setStyle("-fx-text-fill:RED");
-             * } else if (checkPassword() == false) {
-             * logMsg.log(Level.INFO, "password incorrecto");
-             * JOptionPane.showMessageDialog(null, "Password error \nMust have: \n minimum 4 characters length", "Error", JOptionPane.OK_OPTION);
-             * labelPasswordError.setStyle("-fx-text-fill:RED");
-             * } else if (checkConfirmPasword() == false) {
-             * logMsg.log(Level.INFO, "confirm password incorrecto");
-             * JOptionPane.showMessageDialog(null, "\"Password Confirm error\nMust be: \n equals to Password", "Error", JOptionPane.OK_OPTION);
-             * labelPasswordLoginError.setStyle("-fx-text-fill:RED");
-             * } else {
-             * 
-             * createUser();
-             * closeWindow(event);
-             * 
-             * }
-             **/     } catch (FullNameException ex) {
-            Logger.getLogger(Controller_Up.class.getName()).log(Level.SEVERE, null, ex);
+            checkEmail();
+            checkPassword();
+            checkConfirmPasword();
+            createUser();
+        } catch (LoginException ex) {
+            logMsg.log(Level.INFO, "login incorrecto ");
+            JOptionPane.showMessageDialog(null, "Login error \n Must have: \n minimum 3 characters length \n no spaces", "Error", JOptionPane.OK_OPTION);
+            labelLoginError.setStyle("-fx-text-fill:RED");
+        } catch (FullNameException ex) {
+            logMsg.log(Level.INFO, "full name incorrecto ");
+            JOptionPane.showMessageDialog(null, "Full name error \n Must have: \n minimum 8 letters length", "Error", JOptionPane.OK_OPTION);
+            labelFullNameError.setStyle("-fx-text-fill:RED");
+        } catch (EmailException ex) {
+            logMsg.log(Level.INFO, "email incorrecto ");
+            JOptionPane.showMessageDialog(null, "Email format incorrect \n Example: andrew@example.com", "Error", JOptionPane.OK_OPTION);
+            labelGmailError.setStyle("-fx-text-fill:RED");
+        } catch (PasswordException ex) {
+            logMsg.log(Level.INFO, "password incorrecto");
+            JOptionPane.showMessageDialog(null, "Password error \nMust have: \n minimum 4 characters length", "Error", JOptionPane.OK_OPTION);
+            labelPasswordError.setStyle("-fx-text-fill:RED");
+        } catch (PasswordConfirmException ex) {
+            logMsg.log(Level.INFO, "confirm password incorrecto");
+            JOptionPane.showMessageDialog(null, "\"Password Confirm error\nMust be: \n equals to Password", "Error", JOptionPane.OK_OPTION);
+            labelPasswordLoginError.setStyle("-fx-text-fill:RED");
         }
 
     }
 
     /**
-     * Te preguntará si estas seguro si quieres cancelar el registro de usuario
-     * Te llevará la ventana Principal y esta se cerrará
-*
+     * Te preguntará si estas seguro si quieres cancelar el registro de usuario;
+     * Si es que si te llevará la ventana Principal y esta se cerrará. Si es no
+     * te mantendra en la venta de sign up
+     *
+     * @param event      *
      */
     @FXML
     private void handleButtonCancel(ActionEvent event) {
 
-JOptionPane.showConfirmDialog(null, "do you want to get out of the window?", "Alert!", JOptionPane.YES_NO_OPTION);        
-closeWindow(event);
+        JOptionPane.showConfirmDialog(null, "do you want to get out of the window?", "Alert!", JOptionPane.YES_NO_OPTION);
+        closeWindow(event);
 
     }
 
@@ -222,49 +228,34 @@ closeWindow(event);
 
     }
 
-    private boolean checkLogin() {
-
-        String cadena = txtFieldLogin.getText();
-        int espacios = 0;
-        if (cadena.length() > 2) {
-            for (int i = 0; i < cadena.length(); i++) {
-                if (cadena.charAt(i) == ' ') {
-                    espacios++;
-                }
-            }
-        } else {
-            espacios = -1;
-        }
-        if (espacios == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    
-}
     /**
-    private boolean checkLogin() {
+     * Comprueba que el login que se introduza no sea menor a 2 caracteres y no
+     * tenga espacios
+     *
+     * @throws LoginException
+     */
+    private void checkLogin() throws LoginException {
 
         String cadena = txtFieldLogin.getText();
         int espacios = 0;
-        if (cadena.length() > 2) {
-            for (int i = 0; i < cadena.length(); i++) {
-                if (cadena.charAt(i) == ' ') {
-                    espacios++;
-                }
-            }
-        } else {
-            espacios = -1;
-        }
-        if (espacios == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    
-}
- **/   
 
+        for (int i = 0; i < cadena.length(); i++) {
+            if (cadena.charAt(i) == ' ') {
+                espacios++;
+            }
+        }
+
+        if (cadena.length() < 3 || espacios != 0) {
+            throw new LoginException();
+        }
+
+    }
+
+    /**
+     * Comprueba que el full name tenga solo letras y sean un minimo de 8
+     *
+     * @throws FullNameException
+     */
     private void checkFullName() throws FullNameException {
 
         int letras = 0;
@@ -275,18 +266,25 @@ closeWindow(event);
 
         Matcher macther = pattern.matcher(nombre);
         for (int i = 0; i < nombre.length(); i++) {
-            
+
             if (nombre.charAt(i) != ' ') {
-                
+
                 letras++;
             }
-            throw new FullNameException("");
         }
 
+        if (letras < 8 || macther.find() == false) {
+            throw new FullNameException();
+        }
 
     }
 
-    private boolean checkEmail() {
+    /**
+     * Comprueba que el formato del email introducido sea el correcto
+     *
+     * @throws EmailException
+     */
+    private void checkEmail() throws EmailException {
 
         String email = txtFieldGmail.getText();
 
@@ -294,41 +292,49 @@ closeWindow(event);
 
         Matcher mather = pattern.matcher(email);
 
-        if (mather.find() == true) {
-            return true;
-        } else {
-            return false;
+        if (mather.find() == false) {
+            throw new EmailException();
         }
 
     }
 
-    private boolean checkPassword() {
+    /**
+     * Comprueba que la longuitud de la password sea al menos de 4 caracteres
+     *
+     * @throws PasswordException
+     */
+    private void checkPassword() throws PasswordException {
 
         String passwd = txtFieldPassword.getText();
 
-        if (passwd.length() < 3) {
-            return false;
-        } else {
-            return true;
+        if (passwd.length() < 4) {
+            throw new PasswordException();
         }
 
     }
 
-    private boolean checkConfirmPasword() {
+    /**
+     * Comprueba que el la confirmacion de la password sea igual que la password
+     *
+     * @throws PasswordConfirmException
+     */
+    private void checkConfirmPasword() throws PasswordConfirmException {
 
-        if (txtFieldConfrimPassword.getText().equals(txtFieldPassword.getText())) {
-            return true;
-        } else {
-            return false;
+        if (!txtFieldConfrimPassword.getText().equals(txtFieldPassword.getText())) {
+            throw new PasswordConfirmException();
         }
 
     }
 
+    /**
+     * Limita el login para que el usuario solo pueda introducir un maximo de 25
+     * caracteres
+     */
     private void limitLogin() {
         txtFieldLogin.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
-                if (txtFieldLogin.getText().length() > 10) {
+                if (txtFieldLogin.getText().length() > 25) {
                     txtFieldLogin.setText(txtFieldLogin.getText().substring(0, 25));
 
                 }
@@ -338,11 +344,15 @@ closeWindow(event);
         });
     }
 
+    /**
+     * Limita el full name para que el usuario solo pueda introducir un maximo
+     * de 50 caracteres
+     */
     private void limitFullName() {
         txtFieldFullName.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
-                if (txtFieldFullName.getText().length() > 10) {
+                if (txtFieldFullName.getText().length() > 50) {
                     txtFieldFullName.setText(txtFieldFullName.getText().substring(0, 50));
 
                 }
@@ -352,11 +362,15 @@ closeWindow(event);
         });
     }
 
+    /**
+     * Limita el gmail para que el usuario solo pueda introducir un maximo de 50
+     * caracteres
+     */
     private void limitGmail() {
         txtFieldGmail.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
-                if (txtFieldGmail.getText().length() > 10) {
+                if (txtFieldGmail.getText().length() > 50) {
                     txtFieldGmail.setText(txtFieldGmail.getText().substring(0, 50));
 
                 }
@@ -366,6 +380,10 @@ closeWindow(event);
         });
     }
 
+    /**
+     * Limita el password para que el usuario solo pueda introducir un maximo de
+     * 10 caracteres
+     */
     private void limitPassword() {
 
         txtFieldPassword.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -382,6 +400,10 @@ closeWindow(event);
 
     }
 
+    /**
+     * Limita el password confirm para que el usuario solo pueda introducir un
+     * maximo de 10 caracteres
+     */
     private void limitPasswordConfirm() {
 
         txtFieldConfrimPassword.lengthProperty().addListener(new ChangeListener<Number>() {
