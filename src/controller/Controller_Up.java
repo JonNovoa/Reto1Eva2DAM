@@ -9,6 +9,7 @@ import clases.Client;
 
 import exceptions.FullNameException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -106,11 +109,7 @@ public class Controller_Up implements Initializable {
         }
     }
 
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
+ 
 
     /**
      * Cuando todos los campos estén llenos se habilitará el botón. Se validaran
@@ -188,8 +187,18 @@ public class Controller_Up implements Initializable {
     @FXML
     private void handleButtonCancel(ActionEvent event) {
 
-        JOptionPane.showConfirmDialog(null, "do you want to get out of the window?", "Alert!", JOptionPane.YES_NO_OPTION);
-        closeWindow(event);
+              Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Salir");
+        alert.setHeaderText(null);
+        alert.setContentText("¿Estas Seguro?");
+        Optional opc= alert.showAndWait();
+        if (opc.isPresent()){
+            if(opc.get()==ButtonType.OK){
+                        stage.close();
+            }
+        }
 
     }
 
