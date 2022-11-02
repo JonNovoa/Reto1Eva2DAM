@@ -101,12 +101,8 @@ public class Controller_Up implements Initializable {
 
     }
 
-        stage1.setResizable(false);
-
-        stage1.initModality(Modality.APPLICATION_MODAL);
-        stage1.showAndWait();
-
-    }
+     
+    
 
     /**
      * Comprueba el estado de los campos , si hay alguno vacio el boton de Sign
@@ -308,16 +304,26 @@ public class Controller_Up implements Initializable {
 
     /**
      * Comprueba que la longuitud de la password sea al menos de 4 caracteres
+     * y no tenga espacios
      *
      * @throws PasswordException
      */
     private void checkPassword() throws PasswordException {
 
         String passwd = txtFieldPassword.getText();
+        boolean espacios=false;
 
-        if (passwd.length() < 4) {
-            throw new PasswordException();
+        for (int i =0; i < passwd.length()&& passwd.length()>4;i++){
+             if (passwd.charAt(i) == ' ') {
+
+                espacios = true;
+            }
         }
+        
+        if(espacios ==true){
+           throw new PasswordException();  
+        }
+        
 
     }
 
