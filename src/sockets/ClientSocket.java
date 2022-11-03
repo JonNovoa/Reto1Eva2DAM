@@ -8,8 +8,10 @@ package sockets;
 
 import clases.Message;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,24 +24,41 @@ public class ClientSocket {
     
     static final String HOST = "localhost";
     static final int PUERTO = 5000;
-    private Message mensaje;
-
-    /**
-     * Crea el socket con el mensaje que le va a mandar al servidor
-     * @param mensaje 
-     */
-    
-    public ClientSocket(Message mensaje) {
+     //private persona per = null;
+     
+     
+     public ClientSocket(Message mes){
+         // ServerSocket skServidor = null;
+        Socket skCliente = null;
         try {
-            Socket skCliente = new Socket(HOST, PUERTO);
-            OutputStream auxx = skCliente.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(auxx);
-            this.mensaje = mensaje;
-            oos.writeObject(mensaje);
+             skCliente = new Socket(HOST,PUERTO);
+            System.out.println("Escucho el puerto " + PUERTO);
+          //  skCliente = skServidor.accept();
+
+            ObjectOutputStream out = new ObjectOutputStream(skCliente.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(skCliente.getInputStream());
+            /**
+            persona per = new persona();
+            
+            per.setFechaNacimiento(1990,1,1);
+            per.setApellido("novoa");
+            per.setNif("dafd");
+            per.setNombre("dfd");
+            out.writeObject(per);
+            per =(persona)in.readObject();
+            per.getDatos();
+           **/
+            out.writeObject(mes);
+            
             
             skCliente.close();
-        } catch (IOException ex) {
+            
+            
+        
+     }  catch (IOException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+          
+     }
+     
 }

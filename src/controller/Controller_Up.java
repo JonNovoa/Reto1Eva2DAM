@@ -34,6 +34,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import model.ClientInterface;
+import model.ImplementationClient;
 
 /**
  *
@@ -229,7 +231,8 @@ public class Controller_Up implements Initializable {
         Client cli = new Client();
         cli.setDatos(txtFieldLogin.getText(), txtFieldGmail.getText(), txtFieldFullName.getText(), txtFieldPassword.getText());
         JOptionPane.showMessageDialog(null, "User created successfully", "Done", JOptionPane.INFORMATION_MESSAGE);
-
+        ClientInterface cliInter = new ImplementationClient();
+        cliInter.registerClient(cli);
     }
 
     /**
