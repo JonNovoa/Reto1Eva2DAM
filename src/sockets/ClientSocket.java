@@ -30,7 +30,7 @@ public class ClientSocket {
         // ServerSocket skServidor = null;
         Socket skCliente = null;
         ObjectOutputStream out = null;
-        ObjectInputStream in = null;
+       // ObjectInputStream in = null;
         try {
             skCliente = new Socket(HOST, PUERTO);
             System.out.println("Escucho el puerto " + PUERTO);

@@ -29,20 +29,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFieldLogin" layoutX="450.0" layoutY="118.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />      
-      <TextField fx:id="txtFieldGmail" layoutX="881.0" layoutY="283.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="370.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-      <TextField fx:id="txtFieldFullName" layoutX="351.0" layoutY="223.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-      <Button fx:id="btnSignUp" layoutX="472.0" layoutY="582.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="115.0" text="SIGN UP" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="450.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnCancel" layoutX="856.0" layoutY="589.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="115.0" text="CANCEL" AnchorPane.bottomAnchor="81.0" AnchorPane.rightAnchor="428.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label fx:id="labelConfirmPassword" layoutX="464.0" layoutY="477.0" prefHeight="27.0" prefWidth="152.0" text="Confirm Password" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="470.0">
+       <Label fx:id="labelConfirmPassword" layoutX="464.0" layoutY="477.0" prefHeight="27.0" prefWidth="152.0" text="Confirm Password" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="470.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -72,7 +59,22 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="txtFieldLogin" layoutX="450.0" layoutY="118.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />      
+      <TextField fx:id="txtFieldFullName" layoutX="351.0" layoutY="223.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
+       <TextField fx:id="txtFieldGmail" layoutX="881.0" layoutY="283.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="370.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
       <PasswordField fx:id="txtFieldPassword" layoutX="438.0" layoutY="426.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0"  />
       <PasswordField fx:id="txtFieldConfrimPassword" layoutX="450.0" layoutY="515.0" onKeyReleased="#keyReleasedProperty" prefHeight="30.0" prefWidth="310.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="428.0" />
-   </children>
+       
+      <Button fx:id="btnSignUp" layoutX="472.0" layoutY="582.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="115.0" text="SIGN UP" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="450.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancel" layoutX="856.0" layoutY="589.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="115.0" text="CANCEL" AnchorPane.bottomAnchor="81.0" AnchorPane.rightAnchor="428.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+     
+      </children>
 </AnchorPane>
