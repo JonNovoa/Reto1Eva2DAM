@@ -13,8 +13,9 @@ import clases.Message;
  * @author somor
  */
 public interface ClientInterface {
-    public void registerClient(Client user);
-    public void closeSession();
-    public Message logIn(Client user);
+    public Message registerClient(Message respuesta);
+    public Message logIn(Message respuesta);
+
+    //public void logIn(Message respuesta2);
     
 }

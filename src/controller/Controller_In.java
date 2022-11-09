@@ -101,13 +101,14 @@ public class Controller_In implements Initializable {
         Message respuesta= new Message();
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
-        respuesta = saveLogin(user);
-        try {
+        respuesta.setCliente(user);
+        respuesta = saveLogin(respuesta);
+        /**try {
             coincide = matchUserPass(coincide);
         } catch (ValidateUserPass ex) {
             System.out.println("Usuario y contraseña erroneos");
             Logger.getLogger("Usuario y contraseña erroneos");
-        }
+        }*/
         try {
             hayEspacios = noSpace();
         } catch (NotAceptSpace ex) {
@@ -151,12 +152,12 @@ public class Controller_In implements Initializable {
         return esta;
     }
 
-    private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
+   /** private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
         ClientInterface login = new ImplementationClient();
         Client user = new Client();
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
-         login.logIn(user);
+         //login.logIn(user);
         //Comprueba si el user y la pass coinciden con la base de datos
         if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldPassword.getText().toString().equalsIgnoreCase("pass")) {
             coincide = false;
@@ -167,7 +168,7 @@ public class Controller_In implements Initializable {
             throw new ValidateUserPass("User o Password Erroneos");
         }
         return coincide;
-    }
+    }*/
 
     @FXML
     private void hadleButtonSignUp(ActionEvent event) {
@@ -179,6 +180,8 @@ public class Controller_In implements Initializable {
             Controller_Up controlador = new Controller_Up();
             controlador.setStage(stage);
             controlador.initStage(root);
+            txtFieldUser.setText("");
+            txtFieldPassword.setText("");
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -191,11 +194,15 @@ public class Controller_In implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignOutWindow.fxml"));
             Controller_Log controlador = new Controller_Log();
             controlador.setUsuario(user);
+            
             loader.setController(controlador);
             Parent root = loader.load();
             controlador = loader.getController();
             controlador.setStage(stage);
             controlador.initStage(root);
+            txtFieldUser.setText("");
+            txtFieldPassword.setText("");
+           
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,10 +229,10 @@ public class Controller_In implements Initializable {
         });
     }
 
-    private Message saveLogin(Client user) {
+    private Message saveLogin(Message respuesta) {
           ClientInterface login = new ImplementationClient();
-        Message respuesta= new Message();
-        respuesta=login.logIn(user);
+        respuesta=login.logIn(respuesta);
+        
         return respuesta;
     }
 

@@ -8,6 +8,7 @@ package sockets;
 
 import clases.Message;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -22,11 +23,12 @@ public class ClientSocket {
     static final String HOST = "127.0.0.1";
     static final Integer PUERTO = 5000;
     //private persona per = null;
-
-    public ClientSocket(Message mensaje) {
+    private Message mensajeSalida;
+    public ClientSocket(Message mensaje)   {
         Socket skCliente = null;
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
+        this.mensajeSalida=null;
         try {
             skCliente = new Socket(HOST, PUERTO);
             System.out.println("Escucho el puerto " + PUERTO);
@@ -34,11 +36,15 @@ public class ClientSocket {
             //  skCliente = skServidor.accept();
             oos = new ObjectOutputStream(skCliente.getOutputStream());
             ois= new ObjectInputStream(skCliente.getInputStream());
-           // Message mensaje=(Message) in.readObject();
+           
 
-           // out.writeObject(mensaje);
-
+           oos.writeObject(mensaje);
+           this.mensajeSalida=(Message) ois.readObject();
+           System.out.println(mensajeSalida.getRESPUESTA());
+           
         } catch (IOException ex) {
+            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -51,6 +57,12 @@ public class ClientSocket {
 
         }
 
+        
     }
+    public Message vueltaMensaje(){
+    
+        return this.mensajeSalida;
+    
+}
 
 }

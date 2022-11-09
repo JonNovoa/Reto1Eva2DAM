@@ -5,7 +5,9 @@
  */
 package controller;
 
+import clases.AnswerEnumeration;
 import clases.Client;
+import clases.Message;
 
 import exceptions.*;
 import exceptions.FullNameException;
@@ -227,9 +229,32 @@ public class Controller_Up implements Initializable {
 
     private void createUser() {
         ClientInterface cliInter = new ImplementationClient();
+        Message respuesta=new Message();
         Client cli = new Client();
         cli.setDatos(txtFieldLogin.getText(), txtFieldGmail.getText(), txtFieldFullName.getText(), txtFieldPassword.getText());
-        cliInter.registerClient(cli);
+        respuesta.setCliente(cli);
+        respuesta=cliInter.registerClient(respuesta);
+    if( respuesta.getRESPUESTA().equals(AnswerEnumeration.SINGUP)){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Usuario creado correctamente");
+        Optional opc= alert.showAndWait();
+        if (opc.isPresent()){
+            if(opc.get()==ButtonType.OK){
+                        stage.close();
+            }
+        }
+        txtFieldLogin.setText("");
+        txtFieldFullName.setText("");
+        txtFieldGmail.setText("");
+        txtFieldPassword.setText("");
+        txtFieldConfrimPassword.setText("");
+        
+        
+        }else {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Error al crear el usuario ", ButtonType.OK);
+        alert.show();
+    }
+    
     }
 
     /**

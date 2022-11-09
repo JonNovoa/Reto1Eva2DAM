@@ -5,6 +5,7 @@
  */
 package model;
 
+import clases.AnswerEnumeration;
 import clases.Client;
 import clases.Message;
 import clases.Order;
@@ -17,29 +18,33 @@ import sockets.ClientSocket;
 public class ImplementationClient implements ClientInterface {
 
     @Override
-    public void registerClient(Client user) {
+  public Message registerClient(Message mensaje) {
+
         Order ORDER = Order.UP;
-        Message mensaje= new Message();
-        mensaje.makeMessage(user, ORDER);
-
-        ClientSocket socket= new ClientSocket(mensaje);
-
-    }
-
-    @Override
-    public void closeSession() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Message logIn(Client user) {
-
-        Order ORDER = Order.IN;
-        Message mensaje= new Message();
-        mensaje.makeMessage(user, ORDER);
+        
+        mensaje.setORDER(ORDER);
 
        ClientSocket socket= new ClientSocket(mensaje);
+       mensaje=socket.vueltaMensaje();
+       
+       return mensaje;
         
+        
+        
+       
+    }
+
+ 
+
+    @Override
+    public Message logIn(Message mensaje) {
+
+        Order ORDER = Order.IN;
+        
+        mensaje.setORDER(ORDER);
+
+       ClientSocket socket= new ClientSocket(mensaje);
+       mensaje=socket.vueltaMensaje();
        
        return mensaje;
         
