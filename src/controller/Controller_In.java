@@ -193,8 +193,7 @@ public class Controller_In implements Initializable {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignOutWindow.fxml"));
             Controller_Log controlador = new Controller_Log();
-            controlador.setUsuario(user);
-            
+            controlador.setUsuario(user);            
             loader.setController(controlador);
             Parent root = loader.load();
             controlador = loader.getController();

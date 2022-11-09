@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -55,11 +56,7 @@ public class Controller_Log implements Initializable {
         this.stage = stage;
     }
 
-    @FXML
-    public void recuperarUser() {
-        System.out.println(this.user.getLogin() + " hey ");
-        labelCongrat.setText(String.format("hey", user.getLogin()));
-    }
+
 
     @FXML
     private void hadleButtonSignOut(ActionEvent event) {
@@ -84,8 +81,15 @@ public class Controller_Log implements Initializable {
 
     void initStage(Parent root) {
         Stage stage1 = new Stage();
+        labelCongrat= new Label("Congratulations "+this.user.getLogin() +" you are in");
+        labelCongrat.setLayoutX(140);
+        labelCongrat.setLayoutY(172);
+        labelCongrat.setFont(new Font(36));
+        raiz=(AnchorPane) root;
+        raiz.getChildren().add(labelCongrat);
         Scene scene = new Scene(root);
         stage1.setScene(scene);
+        
         stage1.setTitle("Log In");
         stage1.setResizable(false);
         stage1.initModality(Modality.APPLICATION_MODAL);
