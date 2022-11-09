@@ -21,7 +21,8 @@ public class ImplementationClient implements ClientInterface {
         Order ORDER = Order.UP;
         Message mensaje= new Message();
         mensaje.makeMessage(user, ORDER);
-                ClientSocket socket= new ClientSocket();
+
+        ClientSocket socket= new ClientSocket(mensaje);
 
     }
 
@@ -32,15 +33,19 @@ public class ImplementationClient implements ClientInterface {
 
     @Override
     public Message logIn(Client user) {
+
         Order ORDER = Order.IN;
         Message mensaje= new Message();
         mensaje.makeMessage(user, ORDER);
-        ClientSocket socket= new ClientSocket();
+
+       ClientSocket socket= new ClientSocket(mensaje);
+        
        
-       return mensaje; 
+       return mensaje;
         
         
         
+       
     }
     
     

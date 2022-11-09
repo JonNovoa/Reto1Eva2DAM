@@ -6,6 +6,7 @@ package sockets;
  * and open the template in the editor.
  */
 
+import clases.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,7 +24,7 @@ public class ClientSocket {
     static final Integer PUERTO = 5000;
     //private persona per = null;
 
-    public ClientSocket() {
+    public ClientSocket(Message mensaje) {
         Socket skCliente = null;
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
@@ -36,7 +37,7 @@ public class ClientSocket {
             ois= new ObjectInputStream(skCliente.getInputStream());
            // Message mensaje=(Message) in.readObject();
 
-           // out.writeObject(mes);
+           // out.writeObject(mensaje);
 
         } catch (IOException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
