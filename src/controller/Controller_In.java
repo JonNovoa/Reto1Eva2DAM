@@ -4,7 +4,9 @@
  */
 package controller;
 
+import clases.AnswerEnumeration;
 import clases.Client;
+import clases.Message;
 import exceptions.NotAceptSpace;
 import exceptions.ValidateUserPass;
 import java.io.IOException;
@@ -96,7 +98,10 @@ public class Controller_In implements Initializable {
         boolean hayEspacios = true;
         boolean coincide = true;
         Client user = new Client();
-        user = saveLogin();
+        Message respuesta= new Message();
+        user.setLogin(txtFieldUser.getText());
+        user.setPasswd(txtFieldPassword.getText());
+        respuesta = saveLogin(user);
         try {
             coincide = matchUserPass(coincide);
         } catch (ValidateUserPass ex) {
@@ -109,10 +114,10 @@ public class Controller_In implements Initializable {
             System.out.println("Error hay espacios");
             Logger.getLogger("Error Hay espacios");
         }
-        if (!coincide && !hayEspacios) {
+        if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
             windowsOut(user, event);
         }
-        if (coincide) {
+        else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
             alert.show();
         }
@@ -217,13 +222,11 @@ public class Controller_In implements Initializable {
         });
     }
 
-    private Client saveLogin() {
-        ImplementationClient login = new ImplementationClient();
-        Client user = new Client();
-        user.setLogin(txtFieldUser.getText());
-        user.setPasswd(txtFieldPassword.getText());
-        //login.logIn(user);
-        return user;
+    private Message saveLogin(Client user) {
+          ClientInterface login = new ImplementationClient();
+        Message respuesta= new Message();
+        respuesta=login.logIn(user);
+        return respuesta;
     }
 
 }

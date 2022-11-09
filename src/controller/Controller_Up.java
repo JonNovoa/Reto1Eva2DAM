@@ -226,11 +226,9 @@ public class Controller_Up implements Initializable {
     }
 
     private void createUser() {
-
+        ClientInterface cliInter = new ImplementationClient();
         Client cli = new Client();
         cli.setDatos(txtFieldLogin.getText(), txtFieldGmail.getText(), txtFieldFullName.getText(), txtFieldPassword.getText());
-        JOptionPane.showMessageDialog(null, "User created successfully", "Done", JOptionPane.INFORMATION_MESSAGE);
-        ClientInterface cliInter = new ImplementationClient();
         cliInter.registerClient(cli);
     }
 

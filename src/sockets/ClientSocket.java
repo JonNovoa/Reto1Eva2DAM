@@ -1,15 +1,14 @@
+package sockets;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sockets;
 
-
-import clases.Message;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,27 +18,39 @@ import java.util.logging.Logger;
  * @author somor
  */
 public class ClientSocket {
-    
-    static final String HOST = "localhost";
-    static final int PUERTO = 5000;
-    private Message mensaje;
 
-    /**
-     * Crea el socket con el mensaje que le va a mandar al servidor
-     * @param mensaje 
-     */
-    
-    public ClientSocket(Message mensaje) {
+    static final String HOST = "127.0.0.1";
+    static final Integer PUERTO = 5000;
+    //private persona per = null;
+
+    public ClientSocket() {
+        Socket skCliente = null;
+        ObjectOutputStream oos = null;
+        ObjectInputStream ois = null;
         try {
-            Socket skCliente = new Socket(HOST, PUERTO);
-            OutputStream auxx = skCliente.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(auxx);
-            this.mensaje = mensaje;
-            oos.writeObject(mensaje);
-            
-            skCliente.close();
+            skCliente = new Socket(HOST, PUERTO);
+            System.out.println("Escucho el puerto " + PUERTO);
+
+            //  skCliente = skServidor.accept();
+            oos = new ObjectOutputStream(skCliente.getOutputStream());
+            ois= new ObjectInputStream(skCliente.getInputStream());
+           // Message mensaje=(Message) in.readObject();
+
+           // out.writeObject(mes);
+
         } catch (IOException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                oos.close();
+                ois.close();
+                skCliente.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
+
     }
+
 }

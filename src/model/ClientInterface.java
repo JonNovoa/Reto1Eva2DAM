@@ -6,6 +6,7 @@
 package model;
 
 import clases.Client;
+import clases.Message;
 
 /**
  *
@@ -14,6 +15,6 @@ import clases.Client;
 public interface ClientInterface {
     public void registerClient(Client user);
     public void closeSession();
-    public void logIn(Client user);
+    public Message logIn(Client user);
     
 }
