@@ -237,18 +237,12 @@ public class Controller_Up implements Initializable {
     if( respuesta.getRESPUESTA().equals(AnswerEnumeration.SINGUP)){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Usuario creado correctamente");
-        Optional opc= alert.showAndWait();
-        if (opc.isPresent()){
-            if(opc.get()==ButtonType.OK){
-                        stage.close();
-            }
-        }
         txtFieldLogin.setText("");
         txtFieldFullName.setText("");
         txtFieldGmail.setText("");
         txtFieldPassword.setText("");
         txtFieldConfrimPassword.setText("");
-        
+        alert.showAndWait();
         
         }else {
         Alert alert = new Alert(Alert.AlertType.ERROR, "Error al crear el usuario ", ButtonType.OK);
