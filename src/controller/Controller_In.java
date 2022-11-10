@@ -181,7 +181,7 @@ public class Controller_In implements Initializable {
 
     @FXML
     private void hadleButtonSignUp(ActionEvent event) {
-        //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
+  //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
         try {
             //Navega a la otra ventana cuando el usuario se llega a conectar
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
