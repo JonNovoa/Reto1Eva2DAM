@@ -8,7 +8,6 @@ import clases.AnswerEnumeration;
 import clases.Client;
 import clases.Message;
 import exceptions.NotAceptSpace;
-import exceptions.ValidateUserPass;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,7 +34,7 @@ import model.ImplementationClient;
  * @author josue
  */
 public class Controller_In implements Initializable {
-
+    //Variables Creadas para el uso de la ventanas
     @FXML
     private Logger logger;
     @FXML
@@ -53,7 +52,6 @@ public class Controller_In implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 //Vinculamos los botones para el funcionamiento y sus condiciones
-
         btnSignIn.setOnAction(this::hadleButtonSignIn);
         btnSignUp.setOnAction(this::hadleButtonSignUp);
         limitPasswordUser();
@@ -66,7 +64,7 @@ public class Controller_In implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
+//Recibimos el root y se crea la escena
     public void initStage(Parent root) {
         Scene scene = new Scene(root);
         Stage stage1 = new Stage();
@@ -96,10 +94,14 @@ public class Controller_In implements Initializable {
          */
         //logger.info("hey");
         boolean hayEspacios = true;
-        boolean coincide = true;
+        
         Client user = new Client();
         Message respuesta= new Message();
+        
         if(!txtFieldUser.getText().equalsIgnoreCase("")&&!txtFieldPassword.getText().equalsIgnoreCase("")){
+            try {
+            noSpace();
+        
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
         
@@ -107,12 +109,18 @@ public class Controller_In implements Initializable {
         respuesta = saveLogin(respuesta);
             if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
             windowsOut(user, event);
-        }
+        
+            }
+            
+            
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
             alert.show();
         }
-        
+        } catch (NotAceptSpace ex) {
+            System.out.println("Error hay espacios");
+            Logger.getLogger("Error Hay espacios");
+        }
         
         }else{
              Alert alert = new Alert(Alert.AlertType.ERROR, "Error algun campo esta vacio", ButtonType.OK);
@@ -124,16 +132,10 @@ public class Controller_In implements Initializable {
             System.out.println("Usuario y contraseña erroneos");
             Logger.getLogger("Usuario y contraseña erroneos");
         }*/
-        try {
-            hayEspacios = noSpace();
-        } catch (NotAceptSpace ex) {
-            System.out.println("Error hay espacios");
-            Logger.getLogger("Error Hay espacios");
-        }
     
     }
 
-    private boolean noSpace() throws NotAceptSpace {
+    private void noSpace() throws NotAceptSpace {
         String user = txtFieldUser.getText();
         String pass = txtFieldPassword.getText();
         String letraU;
@@ -158,7 +160,7 @@ public class Controller_In implements Initializable {
             //alert.show();
             throw new NotAceptSpace("Error Hay espacios");
         }
-        return esta;
+        
     }
 
    /** private boolean matchUserPass(boolean coincide) throws ValidateUserPass {

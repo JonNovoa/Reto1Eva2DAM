@@ -75,7 +75,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
 
-    @Test
+   /** @Test
     public void test0_Initialize() {
 
         clickOn("#btnSignUp");
@@ -131,7 +131,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Comprueba que salga la alerta de error al introducir menos de 
      * 3 caracteres
      */
-    
+    /**
      @Test
     public void test2_LoginError1() {
         
@@ -161,7 +161,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Comprueba que salga la alerta de error al introducir  
      * un login con espacios
      */
-    
+    /**
      @Test
     public void test3_LoginError2() {
          clickOn("#btnSignUp");
@@ -185,7 +185,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Comprueba que salga la alerta de error al introducir un full name con 
      * menos de 8 letras
      */
-    
+    /**
  @Test
     public void test4_FullNameError1() {
          clickOn("#btnSignUp");
@@ -207,7 +207,7 @@ public class Controller_UpTest extends ApplicationTest {
     * Comprueba que salga la alerta de error al introducir un full name con
     * que contenga caracteres diferentes a letras
     */
-    
+    /**
      @Test
     public void test5_FullNameError2() {
          clickOn("#btnSignUp");
@@ -229,7 +229,7 @@ public class Controller_UpTest extends ApplicationTest {
    * Comprueba que salga la alerta de error si se introduce un email sin el 
    * formato adecuado (sin @)
    */
-    
+    /**
      @Test
     public void test6_GmailError1() {
          clickOn("#btnSignUp");
@@ -252,7 +252,7 @@ public class Controller_UpTest extends ApplicationTest {
    * Comprueba que salga la alerta de error si se introduce un email sin el 
    * formato adecuado (sin .)
    */
-    
+    /**
     
       @Test
     public void test6_GmailError2() {
@@ -276,7 +276,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Comprueba que salga la alerta de error si se introduce una contraseña
      * con menos de cuatro caracteres de longuitud
      */
-
+/**
      @Test
     public void test6_PasswordError1() {
          clickOn("#btnSignUp");
@@ -298,7 +298,7 @@ public class Controller_UpTest extends ApplicationTest {
     * Comprueba que salga la alerta de error si se introduce una contraseña con 
     * espacios
     */
-    
+    /**
     
      @Test
     public void test7_PasswordError2() {
@@ -321,7 +321,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Comprueba que salga la alerta de error si se introduce en el confrim
      * password una contraseña diferente a las password
      */
-    
+    /**
     
     @Test
     public void test8_PasswordConfirmError1() {
@@ -343,18 +343,19 @@ public class Controller_UpTest extends ApplicationTest {
     
     /**
      * Comprueba que salga la un mensaje indicando que el usuario se a 
-     * registrado correctamente
+     * registrado correctamente(comprobar que no este registrado en la base de datos)
+     * 
      */
-    
+    /**
     @Test
     public void test9_UserCreated1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
-         write("pepe");
+         write("pepe1");
         clickOn("#txtFieldFullName");
         write("pepe perez garcia");
          clickOn("#txtFieldGmail");
-        write("pepe@gmail.com");
+        write("pepe123@gmail.com");
         clickOn("#txtFieldPassword2");
         write("abcd");
         clickOn("#txtFieldConfrimPassword");
@@ -363,7 +364,25 @@ public class Controller_UpTest extends ApplicationTest {
         verifyThat("User created successfully", isVisible());    
        clickOn(isDefaultButton());
     }
-  
+    */
+      @Test
+    public void test9_UserCreatedExistingMail() {
+         clickOn("#btnSignUp");
+        clickOn("#txtFieldLogin");
+         write("josue");
+        clickOn("#txtFieldFullName");
+        write("Josue Vargas");
+         clickOn("#txtFieldGmail");
+        write("josue@gmail.com");
+        clickOn("#txtFieldPassword2");
+        write("abcd*1234");
+        clickOn("#txtFieldConfrimPassword");
+         write("abcd*1234");
+        clickOn("#btnSignUp2");  
+        verifyThat(".alert", isVisible());  
+        clickOn(isDefaultButton());
+    }
+  /**
     @Test
     public void test10_EmptyEspaces() {
          clickOn("#btnSignUp");
@@ -399,5 +418,5 @@ public class Controller_UpTest extends ApplicationTest {
          clickOn("Aceptar");
         verifyThat("#PaneUp", isVisible());  
     }
-    
+*/    
 }

@@ -251,7 +251,7 @@ public class Controller_Up implements Initializable {
         respuesta=cliInter.registerClient(respuesta);
     if( respuesta.getRESPUESTA().equals(AnswerEnumeration.SINGUP)){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Usuario creado correctamente");
+        alert.setContentText("User created successfully");
         txtFieldLogin.setText("");
         txtFieldFullName.setText("");
         txtFieldGmail.setText("");

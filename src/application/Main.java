@@ -16,17 +16,17 @@ import javafx.stage.Stage;
  * @author josue
  */
 public class Main extends Application {
-    
+
+//Creacion de la ventana Principal
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/SignInWindow.fxml"));
+        //Vinculamos la el archivo fxml al loader y lo cargamos al root 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInWindow.fxml"));
         Parent root = loader.load();
-        Controller_In controlador= loader.getController();
+        //Inicializa el Controlador SignIn para enviar la primaryStage y el root.
+        Controller_In controlador = loader.getController();
         controlador.setStage(primaryStage);
         controlador.initStage(root);
-       
-       
     }
 
     /**
@@ -35,5 +35,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
