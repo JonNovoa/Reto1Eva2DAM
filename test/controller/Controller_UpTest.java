@@ -46,7 +46,6 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.ButtonMatchers.isDefaultButton;
 
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
-import org.testfx.service.query.NodeQuery;
 
 
 /**
@@ -70,8 +69,8 @@ public class Controller_UpTest extends ApplicationTest {
     //   FieldLogin   = (TextField) lookup("#txtFieldLogin");
     }
     /**
-     * Comprueba que los campos esten vacios y que el boton Sign Up esta 
-     * desabilitado y el boton Cancel habilitado
+     * Check that the fields are empty and that the Sign Up button is disabled and the Cancel button is enabled. 
+     * disabled and the Cancel button is enabled.
      */
     
 
@@ -82,7 +81,7 @@ public class Controller_UpTest extends ApplicationTest {
         verifyThat("#txtFieldLogin", hasText(""));
         verifyThat("#txtFieldFullName", hasText(""));
         verifyThat("#txtFieldGmail", hasText(""));
-        verifyThat("#txtFieldPassword", hasText(""));
+        verifyThat("#txtFieldPassword2", hasText(""));
         verifyThat("#txtFieldConfrimPassword", hasText(""));
         verifyThat("#btnSignUp2", isDisabled());
         verifyThat("#btnCancel", isEnabled());
@@ -91,10 +90,10 @@ public class Controller_UpTest extends ApplicationTest {
     }
 
     /**
-     * Test que comprueba que el boton Sign Up se habilita solo cuando todos los
-     * campos esten rellenos
+     * Test that verifies that the Sign Up button is enabled only when all fields are filled in.
+     * fields are filled in
      **/
-     /**
+     
     @Test
     public void test1_SignUpIsEnabled() {
 
@@ -102,7 +101,7 @@ public class Controller_UpTest extends ApplicationTest {
         clickOn("#txtFieldLogin");
         write("pepe3");
         verifyThat("#btnSignUp2", isDisabled());
-       verifyThat("#btnCancel", isEnabled());
+        verifyThat("#btnCancel", isEnabled());
 
         clickOn("#txtFieldFullName");
         write("pepe perez garcia");
@@ -128,8 +127,8 @@ public class Controller_UpTest extends ApplicationTest {
 
     }
     /**
-     * Comprueba que salga la alerta de error al introducir menos de 
-     * 3 caracteres
+     * Check that the error alert is displayed when entering less than 
+     * 3 characters
      */
     /**
      @Test
@@ -149,17 +148,11 @@ public class Controller_UpTest extends ApplicationTest {
         clickOn("#btnSignUp2");  
         verifyThat("Login error \n Must have: \n minimum 3 characters length \n no spaces", isVisible());    
        clickOn(isDefaultButton());
-        //verifyThat(".alert", NodeMatchers.isVisible()); 
-       // write("abcd*1234");
-  // verifyThat("#labelLoginError", );
-        // clickOn("#txtFieldLogin");
-       // txtFieldLogin = lookup("#txtFieldLogin").query();
-       //  eraseText(txtFieldLogin.getText().length());
-       // write("abcd*1234");
+       
     }
       /**
-     * Comprueba que salga la alerta de error al introducir  
-     * un login con espacios
+     *  Check that the error alert is displayed when you enter  
+     *  a login with spaces
      */
     /**
      @Test
@@ -182,8 +175,8 @@ public class Controller_UpTest extends ApplicationTest {
     
     
     /**
-     * Comprueba que salga la alerta de error al introducir un full name con 
-     * menos de 8 letras
+     * Check that the error alert is displayed when entering a full name with 
+     * less than 8 letters
      */
     /**
  @Test
@@ -204,8 +197,8 @@ public class Controller_UpTest extends ApplicationTest {
        clickOn(isDefaultButton());
     }
    /**
-    * Comprueba que salga la alerta de error al introducir un full name con
-    * que contenga caracteres diferentes a letras
+    * Check that the error alert is displayed when entering a full name with a full name with
+    * containing characters other than letters
     */
     /**
      @Test
@@ -226,8 +219,8 @@ public class Controller_UpTest extends ApplicationTest {
        clickOn(isDefaultButton());
     }
   /**
-   * Comprueba que salga la alerta de error si se introduce un email sin el 
-   * formato adecuado (sin @)
+   * Check that the error alert is displayed if an email is entered without the proper * formatting (without @) 
+   * proper formatting (without @)
    */
     /**
      @Test
@@ -249,13 +242,13 @@ public class Controller_UpTest extends ApplicationTest {
     }
     
      /**
-   * Comprueba que salga la alerta de error si se introduce un email sin el 
-   * formato adecuado (sin .)
+   * Check that the error alert is displayed if an email is entered without the proper format (without . 
+   * proper formatting (without .)
    */
     /**
     
       @Test
-    public void test6_GmailError2() {
+    public void test7_GmailError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write("pepe");
@@ -270,15 +263,15 @@ public class Controller_UpTest extends ApplicationTest {
         clickOn("#btnSignUp2");  
         verifyThat("Email format incorrect \n Example: andrew@example.com", isVisible());    
        clickOn(isDefaultButton());
-    }
+    }    
     
     /**
-     * Comprueba que salga la alerta de error si se introduce una contraseña
-     * con menos de cuatro caracteres de longuitud
+     * Check that the error alert is displayed if a password is entered.
+     * with less than four characters in length
      */
 /**
      @Test
-    public void test6_PasswordError1() {
+    public void test8_PasswordError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write("pepe");
@@ -291,17 +284,17 @@ public class Controller_UpTest extends ApplicationTest {
         clickOn("#txtFieldConfrimPassword");
          write("abc");
         clickOn("#btnSignUp2");  
-        verifyThat("Password error \nMust have: \n minimum 4 characters length", isVisible());    
+        verifyThat(".alert", isVisible());    
        clickOn(isDefaultButton());
     }
    /**
-    * Comprueba que salga la alerta de error si se introduce una contraseña con 
-    * espacios
+    * Check that the error alert is displayed if a password with * spaces is entered. 
+    * spaces
     */
     /**
     
      @Test
-    public void test7_PasswordError2() {
+    public void test9_PasswordError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write("pepe");
@@ -317,14 +310,15 @@ public class Controller_UpTest extends ApplicationTest {
         verifyThat("Password error \nMust have: \n minimum 4 characters length", isVisible());    
        clickOn(isDefaultButton());
     }
+    
     /**
-     * Comprueba que salga la alerta de error si se introduce en el confrim
-     * password una contraseña diferente a las password
+     * Check that the error alert is displayed if it is entered in the confrim
+     * password a password different from the passwords
      */
     /**
     
     @Test
-    public void test8_PasswordConfirmError1() {
+    public void test10_PasswordConfirmError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write("pepe");
@@ -342,13 +336,12 @@ public class Controller_UpTest extends ApplicationTest {
     }
     
     /**
-     * Comprueba que salga la un mensaje indicando que el usuario se a 
-     * registrado correctamente(comprobar que no este registrado en la base de datos)
-     * 
+     * Check that a message is displayed indicating that the user has successfully 
+     * registered (check that he/she is not registered in the database). 
      */
     /**
     @Test
-    public void test9_UserCreated1() {
+    public void test11_UserCreated1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write("pepe1");
@@ -360,31 +353,17 @@ public class Controller_UpTest extends ApplicationTest {
         write("abcd");
         clickOn("#txtFieldConfrimPassword");
          write("abcd");
-        clickOn("#btnSignUp2");  
-        verifyThat("User created successfully", isVisible());    
+        clickOn("#btnSignUp2");
+        verifyThat(".alert", isVisible());
        clickOn(isDefaultButton());
     }
-    */
-      @Test
-    public void test9_UserCreatedExistingMail() {
-         clickOn("#btnSignUp");
-        clickOn("#txtFieldLogin");
-         write("josue");
-        clickOn("#txtFieldFullName");
-        write("Josue Vargas");
-         clickOn("#txtFieldGmail");
-        write("josue@gmail.com");
-        clickOn("#txtFieldPassword2");
-        write("abcd*1234");
-        clickOn("#txtFieldConfrimPassword");
-         write("abcd*1234");
-        clickOn("#btnSignUp2");  
-        verifyThat(".alert", isVisible());  
-        clickOn(isDefaultButton());
-    }
-  /**
+  
+    /**
+     * check that if a space is entered at the beginning, the sign up button 
+     * is disabled.
+     */
     @Test
-    public void test10_EmptyEspaces() {
+    public void test12_EmptyEspaces() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
          write(" ");
@@ -401,16 +380,62 @@ public class Controller_UpTest extends ApplicationTest {
     }
     
     
-    
+    /**
+     * check if pressing the cancel button and then clicking on accept shows 
+     * the sign in window.
+     */
      @Test
-    public void test11_GTSignIn() {
+    public void test13_GTSignIn() {
         clickOn("#btnSignUp");
         clickOn("#btnCancel");  
          clickOn("Cancelar");
         verifyThat("#PaneUp", isVisible());  
     }
     
-    
+    /**
+     * Check that the Gmail is repeated and the alert pops up.
+     */    
+    @Test
+    public void test14_GmailExists() {
+         clickOn("#btnSignUp");
+        clickOn("#txtFieldLogin");
+         write("pepe1234");
+        clickOn("#txtFieldFullName");
+        write("pepe perez garcia");
+         clickOn("#txtFieldGmail");
+        write("pepe@gmail.com");
+        clickOn("#txtFieldPassword2");
+        write("abcd*1234");
+        clickOn("#txtFieldConfrimPassword");
+         write("abcd*1234");
+        clickOn("#btnSignUp2");  
+        verifyThat(".alert", isVisible());    
+       clickOn(isDefaultButton());
+    }
+    /**
+     * Check that the Login is repeated and the alert pops up.
+     */
+     @Test
+    public void test15_LoginExists() {
+         clickOn("#btnSignUp");
+        clickOn("#txtFieldLogin");
+         write("pepe");
+        clickOn("#txtFieldFullName");
+        write("pepe perez garcia");
+         clickOn("#txtFieldGmail");
+        write("pepe1234@gmail.com");
+        clickOn("#txtFieldPassword2");
+        write("abcd*1234");
+        clickOn("#txtFieldConfrimPassword");
+         write("abcd*1234");
+        clickOn("#btnSignUp2");  
+        verifyThat(".alert", isVisible());    
+       clickOn(isDefaultButton());
+    }
+    /**
+     * check if the sign up window is still displayed by clicking on the cancel button 
+     *	and then clicking on cancel
+     */
      @Test
     public void test16_Stay() {
         clickOn("#btnSignUp");
@@ -418,5 +443,5 @@ public class Controller_UpTest extends ApplicationTest {
          clickOn("Aceptar");
         verifyThat("#PaneUp", isVisible());  
     }
-*/    
+    
 }

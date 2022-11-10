@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,8 +20,8 @@ import java.util.logging.Logger;
  */
 public class ClientSocket {
 
-    static final String HOST = "127.0.0.1";
-    static final Integer PUERTO = 5000;
+    static final String HOST = ResourceBundle.getBundle("clases.connection").getString("host");
+    static final Integer PUERTO = Integer.parseInt(ResourceBundle.getBundle("clases.connection").getString("puerto"));
     //private persona per = null;
     private Message mensajeSalida;
 

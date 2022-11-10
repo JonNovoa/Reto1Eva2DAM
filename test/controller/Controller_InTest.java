@@ -7,18 +7,15 @@ package controller;
 
 import application.Main;
 import java.awt.TextField;
-import java.util.concurrent.TimeoutException;
 import javafx.stage.Stage;
-import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import static org.testfx.api.FxAssert.verifyThat;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
-import static org.testfx.matcher.base.NodeMatchers.isNull;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
+import static org.testfx.matcher.control.ButtonMatchers.isDefaultButton;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 
 /**
@@ -34,20 +31,13 @@ public class Controller_InTest extends ApplicationTest {
     private TextField txtFieldUser;
     private TextField txtFieldPassword;
 
-    /**
-    @BeforeClass
-    public static void setUpClass() throws TimeoutException {
-        FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(Main.class);
-   }
-    **/
       @Override
     public void start(Stage stage) throws Exception {
         new Main().start(stage);
     }
     /**
-     * Comprueba que los campos de Login y contraseña esten vacios al iniciarse
-     * la aplicacion y que los botones Sign Up y Sign In esten habitados
+     * Check that the Login and Password fields are empty at startup and that the Sign Up and Sign In buttons are empty
+     * and that the Sign Up and Sign In buttons are Enabled.
      */
     @Test
     public void test1_InitialState() {
@@ -59,8 +49,8 @@ public class Controller_InTest extends ApplicationTest {
     }
     
     /**
-    * Comprueba que al pulsar el boton Sign Up no lleve a la ventana para 
-    * registrarse
+    * Check that clicking the Sign Up button does not take you to the window to 
+    * register
     */
    
      @Test
@@ -70,6 +60,53 @@ public class Controller_InTest extends ApplicationTest {
         verifyThat("#PaneUp", isVisible());
        
     }
+    /**
+     * Checks that the Login does not exist and the alert pops up.
+     */
+    @Test
+    public void test3_WrongLogin(){
+        clickOn("#txtFieldUser");
+        write("noexiste");
+        clickOn("#txtFieldPassword");
+        write("abcd*1234");
+        clickOn("#btnSignIn");
+        verifyThat(".alert", isVisible());
+        clickOn(isDefaultButton());
+    }
     
+    /**
+     * Checks that the Password does not match with the Login and the alert pops up.
+     */
+    @Test
+    public void test4_WrongPassword(){
+        clickOn("#txtFieldUser");
+        write("Gonzalo");
+        clickOn("#txtFieldPassword");
+        write("abcd*12345");
+        clickOn("#btnSignIn");
+        verifyThat(".alert", isVisible());
+        clickOn(isDefaultButton());
+    }
     
+    /**
+     * Checks that the fields are empty and the alert pops up.
+     */
+    @Test
+    public void test5_EmptyFields(){
+        clickOn("#btnSignIn");
+        verifyThat(".alert", isVisible());
+        clickOn(isDefaultButton());
+    }
+    /**
+     * Check that the Log in is successful and the Sign Out window opens.
+     */
+    @Test
+    public void test6_GTSignOut(){
+        clickOn("#txtFieldUser");
+        write("Gonzalo");
+        clickOn("#txtFieldPassword");
+        write("abcd*1234");
+        clickOn("#btnSignIn");
+        verifyThat("#PaneOut", isVisible());
+    }
 }

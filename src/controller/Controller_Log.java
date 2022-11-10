@@ -89,7 +89,7 @@ public class Controller_Log implements Initializable {
         Scene scene = new Scene(root);
         stage1.setScene(scene);
         
-        stage1.setTitle("Log In");
+        stage1.setTitle("Log");
         //modal
         stage1.setResizable(false);
         stage1.initModality(Modality.APPLICATION_MODAL);

@@ -105,6 +105,8 @@ public class Controller_Up implements Initializable {
         if (txtFieldLogin.getText().isEmpty() || txtFieldFullName.getText().isEmpty() || txtFieldGmail.getText().isEmpty() || txtFieldPassword2.getText().isEmpty() || txtFieldConfrimPassword.getText().isEmpty()
                 || txtFieldLogin.getText().equals(" ") || txtFieldFullName.getText().equals(" ") || txtFieldGmail.getText().equals(" ") || txtFieldPassword2.getText().equals(" ") || txtFieldConfrimPassword.getText().equals(" ")) {
             btnSignUp2.setDisable(true);
+
+
         } else {
             btnSignUp2.setDisable(false);
         }
@@ -139,6 +141,7 @@ public class Controller_Up implements Initializable {
     @FXML
     private void handleButtonSignUp(ActionEvent event) {
         hideAlerts();
+
         try {
             checkLogin();
             checkFullName();
