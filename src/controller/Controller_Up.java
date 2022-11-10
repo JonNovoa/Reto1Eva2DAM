@@ -44,6 +44,7 @@ import model.ImplementationClient;
  * @author Jon Novoa
  */
 public class Controller_Up implements Initializable {
+  
 
     private static final Logger logMsg = Logger.getLogger("");
 
@@ -60,11 +61,11 @@ public class Controller_Up implements Initializable {
     @FXML
     private TextField txtFieldGmail;
     @FXML
-    private PasswordField txtFieldPassword;
+    private PasswordField txtFieldPassword2;
     @FXML
     private PasswordField txtFieldConfrimPassword;
     @FXML
-    private Button btnSignUp;
+    private Button btnSignUp2;
     @FXML
     private Button btnCancel;
     @FXML
@@ -82,7 +83,7 @@ public class Controller_Up implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         start();
-        btnSignUp.setOnAction(this::handleButtonSignUp);
+        btnSignUp2.setOnAction(this::handleButtonSignUp);
         btnCancel.setOnAction(this::handleButtonCancel);
 
     }
@@ -115,11 +116,13 @@ public class Controller_Up implements Initializable {
      */
     public void keyReleasedProperty() {
 
-        if (txtFieldLogin.getText().isEmpty() || txtFieldFullName.getText().isEmpty() || txtFieldGmail.getText().isEmpty() || txtFieldPassword.getText().isEmpty() || txtFieldConfrimPassword.getText().isEmpty()) {
-            btnSignUp.setDisable(true);
+        if (txtFieldLogin.getText().isEmpty() || txtFieldFullName.getText().isEmpty() || txtFieldGmail.getText().isEmpty() || txtFieldPassword2.getText().isEmpty() || txtFieldConfrimPassword.getText().isEmpty() ||
+            txtFieldLogin.getText().equals(" ") || txtFieldFullName.getText().equals(" ") || txtFieldGmail.getText().equals(" ") || txtFieldPassword2.getText().equals(" ") || txtFieldConfrimPassword.getText().equals(" ")) {
+            btnSignUp2.setDisable(true);
+           
 
         } else {
-            btnSignUp.setDisable(false);
+            btnSignUp2.setDisable(false);
         }
     }
 
@@ -148,8 +151,8 @@ public class Controller_Up implements Initializable {
      */
     @FXML
     private void handleButtonSignUp(ActionEvent event) {
-        hideAlerts();
-
+      
+            hideAlerts();
         try {
             checkLogin();
             checkFullName();
@@ -159,23 +162,33 @@ public class Controller_Up implements Initializable {
             createUser();
         } catch (LoginException ex) {
             logMsg.log(Level.INFO, "login incorrecto ");
-            JOptionPane.showMessageDialog(null, "Login error \n Must have: \n minimum 3 characters length \n no spaces", "Error", JOptionPane.OK_OPTION);
-            labelLoginError.setStyle("-fx-text-fill:RED");
+           // JOptionPane.showMessageDialog(null, "Login error \n Must have: \n minimum 3 characters length \n no spaces", "Error", JOptionPane.OK_OPTION);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Login error \n Must have: \n minimum 3 characters length \n no spaces", ButtonType.OK);
+             alert.show();
+           labelLoginError.setStyle("-fx-text-fill:RED");
         } catch (FullNameException ex) {
             logMsg.log(Level.INFO, "full name incorrecto ");
-            JOptionPane.showMessageDialog(null, "Full name error \n Must have: \n minimum 8 letters length", "Error", JOptionPane.OK_OPTION);
+            //JOptionPane.showMessageDialog(null, "Full name error \n Must have: \n minimum 8 letters length", "Error", JOptionPane.OK_OPTION);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Full name error \n Must have: \n minimum 8 letters length", ButtonType.OK);
+             alert.show();
             labelFullNameError.setStyle("-fx-text-fill:RED");
         } catch (EmailException ex) {
             logMsg.log(Level.INFO, "email incorrecto ");
-            JOptionPane.showMessageDialog(null, "Email format incorrect \n Example: andrew@example.com", "Error", JOptionPane.OK_OPTION);
+            //JOptionPane.showMessageDialog(null, "Email format incorrect \n Example: andrew@example.com", "Error", JOptionPane.OK_OPTION);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Email format incorrect \n Example: andrew@example.com", ButtonType.OK);
+             alert.show();
             labelGmailError.setStyle("-fx-text-fill:RED");
         } catch (PasswordException ex) {
             logMsg.log(Level.INFO, "password incorrecto");
-            JOptionPane.showMessageDialog(null, "Password error \nMust have: \n minimum 4 characters length", "Error", JOptionPane.OK_OPTION);
-            labelPasswordError.setStyle("-fx-text-fill:RED");
+           // JOptionPane.showMessageDialog(null, "Password error \nMust have: \n minimum 4 characters length", "Error", JOptionPane.OK_OPTION);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Password error \nMust have: \n minimum 4 characters length", ButtonType.OK);
+             alert.show();
+           labelPasswordError.setStyle("-fx-text-fill:RED");
         } catch (PasswordConfirmException ex) {
-            logMsg.log(Level.INFO, "confirm password incorrecto");
-            JOptionPane.showMessageDialog(null, "\"Password Confirm error\nMust be: \n equals to Password", "Error", JOptionPane.OK_OPTION);
+            logMsg.log(Level.INFO, "confirm password incorrecto");           
+            //JOptionPane.showMessageDialog(null, "\"Password Confirm error\nMust be: \n equals to Password", "Error", JOptionPane.OK_OPTION);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "\"Password Confirm error\nMust be: \n equals to Password", ButtonType.OK);
+             alert.show();
             labelPasswordLoginError.setStyle("-fx-text-fill:RED");
         }
 
@@ -207,7 +220,7 @@ public class Controller_Up implements Initializable {
     @FXML
     private void start() {
 
-        btnSignUp.setDisable(true);
+        btnSignUp2.setDisable(true);
 
         hideAlerts();
 
@@ -220,18 +233,20 @@ public class Controller_Up implements Initializable {
     }
 
     private void hideAlerts() {
+
         labelLoginError.setStyle("-fx-text-fill:TRANSPARENT");
         labelFullNameError.setStyle("-fx-text-fill:TRANSPARENT");
         labelGmailError.setStyle("-fx-text-fill:TRANSPARENT");
         labelPasswordError.setStyle("-fx-text-fill:TRANSPARENT");
         labelPasswordLoginError.setStyle("-fx-text-fill:TRANSPARENT");
+        
     }
 
     private void createUser() {
         ClientInterface cliInter = new ImplementationClient();
         Message respuesta=new Message();
         Client cli = new Client();
-        cli.setDatos(txtFieldLogin.getText(), txtFieldGmail.getText(), txtFieldFullName.getText(), txtFieldPassword.getText());
+        cli.setDatos(txtFieldLogin.getText(), txtFieldGmail.getText(), txtFieldFullName.getText(), txtFieldPassword2.getText());
         respuesta.setCliente(cli);
         respuesta=cliInter.registerClient(respuesta);
     if( respuesta.getRESPUESTA().equals(AnswerEnumeration.SINGUP)){
@@ -240,7 +255,7 @@ public class Controller_Up implements Initializable {
         txtFieldLogin.setText("");
         txtFieldFullName.setText("");
         txtFieldGmail.setText("");
-        txtFieldPassword.setText("");
+        txtFieldPassword2.setText("");
         txtFieldConfrimPassword.setText("");
         alert.showAndWait();
         
@@ -329,17 +344,20 @@ public class Controller_Up implements Initializable {
      */
     private void checkPassword() throws PasswordException {
 
-        String passwd = txtFieldPassword.getText();
-        boolean espacios=false;
-
-        for (int i =0; i < passwd.length()&& passwd.length()>4;i++){
+        String passwd = txtFieldPassword2.getText();
+        boolean error=true;
+        
+        
+            
+          for (int i =0; i < passwd.length()  ;i++){
              if (passwd.charAt(i) == ' ') {
 
-                espacios = true;
+                error = false;
             }
-        }
+           }
+         
         
-        if(espacios ==true){
+        if(error ==false ||  passwd.length()<4){
            throw new PasswordException();  
         }
         
@@ -353,7 +371,7 @@ public class Controller_Up implements Initializable {
      */
     private void checkConfirmPasword() throws PasswordConfirmException {
 
-        if (!txtFieldConfrimPassword.getText().equals(txtFieldPassword.getText())) {
+        if (!txtFieldConfrimPassword.getText().equals(txtFieldPassword2.getText())) {
             throw new PasswordConfirmException();
         }
 
@@ -419,11 +437,11 @@ public class Controller_Up implements Initializable {
      */
     private void limitPassword() {
 
-        txtFieldPassword.lengthProperty().addListener(new ChangeListener<Number>() {
+        txtFieldPassword2.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number valorAnterior, Number valorActual) {
-                if (txtFieldPassword.getText().length() > 10) {
-                    txtFieldPassword.setText(txtFieldPassword.getText().substring(0, 10));
+                if (txtFieldPassword2.getText().length() > 10) {
+                    txtFieldPassword2.setText(txtFieldPassword2.getText().substring(0, 10));
 
                 }
 
