@@ -34,6 +34,7 @@ import model.ImplementationClient;
  * @author josue
  */
 public class Controller_In implements Initializable {
+
     //Variables Creadas para el uso de la ventanas
     @FXML
     private Logger logger;
@@ -51,7 +52,7 @@ public class Controller_In implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-//Vinculamos los botones para el funcionamiento y sus condiciones
+//We link the buttons for operation and their conditions
         btnSignIn.setOnAction(this::hadleButtonSignIn);
         btnSignUp.setOnAction(this::hadleButtonSignUp);
         limitPasswordUser();
@@ -64,7 +65,8 @@ public class Controller_In implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-//Recibimos el root y se crea la escena
+//Receive the root and the scene is created
+
     public void initStage(Parent root) {
         Scene scene = new Scene(root);
         Stage stage1 = new Stage();
@@ -73,66 +75,65 @@ public class Controller_In implements Initializable {
         stage1.setTitle("Sign In");
         stage1.show();
     }
-    //Valida el user y la password
+    //Validates user and password
 
     @FXML
     private void hadleButtonSignIn(ActionEvent event) {
-        //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
-        //alert.show();
         /**
-         * No aceptarán espacios ni la password ni el user User podrá tener como
-         * máximo 25 caracteres y password podrá tener como máximo 10 caracteres
-         * El password permanece encriptada Tanto Password como User podrán
-         * tener números, letras y caracteres especiales. Si el usuario y la
-         * contraseña cumplen lo anterior dicho se validarán los datos y se
-         * meteran en un objeto User que se enviará a la capa de interfaz con el
-         * método logIn(User user) Si las credenciales no son validadas se
-         * informará con un aviso de error y saltará una excepción Si existe el
-         * usuario en la base de datos y la contraseña es correcta te llevará a
-         * otra ventana(Ventana Sign out) y esta ventana quedará bloqueada
+         * No spaces will be accepted neither the password nor the user User can
+         * have a maximum of 25 characters and the password can have a maximum
+         * of 10 characters. Maximum 25 characters and the password can have a
+         * maximum of 10 characters. The password remains encrypted. Both
+         * Password and User can have numbers, letters and special characters.
+         * have numbers, letters and special characters. If the user and
+         * password If the user and the password comply with the above, the data
+         * will be validated and If the user and password meet the above, the
+         * data will be validated and * entered into a User object that will be
+         * sent to the interface layer with the logIn(User user) method. method
+         * logIn(User user). If the credentials are not validated, an error
+         * message will be * reported. If the credentials are not validated, an
+         * error message will be * reported and an exception will be raised.
+         * user exists in the database and the password is correct it will take
+         * you to another window (Sign out window) and this window will be
+         * locked.
          *
          */
-        //logger.info("hey");
         boolean hayEspacios = true;
-        
         Client user = new Client();
-        Message respuesta= new Message();
-        
-        if(!txtFieldUser.getText().equalsIgnoreCase("")&&!txtFieldPassword.getText().equalsIgnoreCase("")){
+        Message respuesta = new Message();
+        //Controls the User and Password fields so that they are not empty. 
+        if (!txtFieldUser.getText().equalsIgnoreCase("") && !txtFieldPassword.getText().equalsIgnoreCase("")) {
             try {
-            noSpace();
-        
-        user.setLogin(txtFieldUser.getText());
-        user.setPasswd(txtFieldPassword.getText());
-        
-        respuesta.setCliente(user);
-        respuesta = saveLogin(respuesta);
-            if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
-            windowsOut(user, event);
-        
+                //Controls that there are no spaces
+                noSpace();
+                //Introduce los datos en objeto User
+                user.setLogin(txtFieldUser.getText());
+                user.setPasswd(txtFieldPassword.getText());
+                //Input data into User object
+                respuesta.setCliente(user);
+                //sends the response object to be parsed and return another updated response 
+                respuesta = saveLogin(respuesta);
+                //the message Updated, according to its enumeration we see if one or the other is executed
+                if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
+                    //OpenSignOutyWindow sends the User object
+                    windowsOut(user);
+
+                } else {
+                    //Alert that the user name or password is Wrong
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
+                    alert.show();
+                }
+            } catch (NotAceptSpace ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error, No Acepta Espacios", ButtonType.OK);
+                alert.show();
+                Logger.getLogger("Error Hay espacios");
             }
-            
-            
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
+
+        } else {
+//Alert that there is an Empty Space in User or Password
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error algun campo esta vacio", ButtonType.OK);
             alert.show();
         }
-        } catch (NotAceptSpace ex) {
-            System.out.println("Error hay espacios");
-            Logger.getLogger("Error Hay espacios");
-        }
-        
-        }else{
-             Alert alert = new Alert(Alert.AlertType.ERROR, "Error algun campo esta vacio", ButtonType.OK);
-            alert.show();
-        }
-        /**try {
-            coincide = matchUserPass(coincide);
-        } catch (ValidateUserPass ex) {
-            System.out.println("Usuario y contraseña erroneos");
-            Logger.getLogger("Usuario y contraseña erroneos");
-        }*/
-    
     }
 
     private void noSpace() throws NotAceptSpace {
@@ -141,14 +142,14 @@ public class Controller_In implements Initializable {
         String letraU;
         String letraP;
         boolean esta = false;
-//este bucle busca si existe un espacio en el String usuario
+//this loop searches if there is a space in the user String
         for (int i = 0; i < user.length() && !esta; i++) {
             letraU = user.charAt(i) + "";
             if (letraU.equalsIgnoreCase(" ")) {
                 esta = true;
             }
         }
-//este bucle busca si existe un espacio en el String password
+//this loop searches if there is a space in the String password
         for (int i = 0; i < pass.length() && !esta; i++) {
             letraP = pass.charAt(i) + "";
             if (letraP.equalsIgnoreCase(" ")) {
@@ -160,32 +161,13 @@ public class Controller_In implements Initializable {
             //alert.show();
             throw new NotAceptSpace("Error Hay espacios");
         }
-        
     }
-
-   /** private boolean matchUserPass(boolean coincide) throws ValidateUserPass {
-        ClientInterface login = new ImplementationClient();
-        Client user = new Client();
-        user.setLogin(txtFieldUser.getText());
-        user.setPasswd(txtFieldPassword.getText());
-         //login.logIn(user);
-        //Comprueba si el user y la pass coinciden con la base de datos
-        if (txtFieldUser.getText().toString().equalsIgnoreCase("user") && txtFieldPassword.getText().toString().equalsIgnoreCase("pass")) {
-            coincide = false;
-        } else {
-            coincide = true;
-            //Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario y contraseña no coincide", ButtonType.OK);
-            //alert.show();
-            throw new ValidateUserPass("User o Password Erroneos");
-        }
-        return coincide;
-    }*/
 
     @FXML
     private void hadleButtonSignUp(ActionEvent event) {
-        //Te llevará a otra Ventana(Ventana Sign up) y esta ventana quedará bloqueada
+//You will be taken to another window (Sign up window) and this window will be locked.
         try {
-            //Navega a la otra ventana cuando el usuario se llega a conectar
+            //Navigates to the other window when the user logs in.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
             Parent root = loader.load();
             Controller_Up controlador = new Controller_Up();
@@ -198,26 +180,27 @@ public class Controller_In implements Initializable {
         }
     }
 
-    private void windowsOut(Client user, ActionEvent event) {
+    private void windowsOut(Client user) {
         try {
-            //Navega a la otra ventana cuando el usuario se llega a conectar
+            //Navigates to the SIgnOut window when the user logs in. 
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignOutWindow.fxml"));
             Controller_Log controlador = new Controller_Log();
-            controlador.setUsuario(user);            
+            //Manda el usuario a la ventana destino
+            controlador.setUsuario(user);
             loader.setController(controlador);
             Parent root = loader.load();
             controlador = loader.getController();
             controlador.setStage(stage);
             controlador.initStage(root);
+            //When navigating to the other window, we clear the fields of the Sign In Window.
             txtFieldUser.setText("");
             txtFieldPassword.setText("");
-           
         } catch (IOException ex) {
             Logger.getLogger(Controller_In.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//Limitamos el user a 25 caracteres y password a 10 caracteres 
+//Limit the user to 25 characters and password to 10 characters 
 
     private void limitPasswordUser() {
         txtFieldUser.lengthProperty().addListener(new ChangeListener<Number>() {
@@ -238,11 +221,12 @@ public class Controller_In implements Initializable {
 
         });
     }
+//Send the response to the Implementation
 
     private Message saveLogin(Message respuesta) {
-          ClientInterface login = new ImplementationClient();
-        respuesta=login.logIn(respuesta);
-        
+        ClientInterface login = new ImplementationClient();
+        respuesta = login.logIn(respuesta);
+
         return respuesta;
     }
 

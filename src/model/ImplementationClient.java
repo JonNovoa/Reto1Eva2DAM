@@ -5,8 +5,6 @@
  */
 package model;
 
-import clases.AnswerEnumeration;
-import clases.Client;
 import clases.Message;
 import clases.Order;
 import sockets.ClientSocket;
@@ -17,42 +15,30 @@ import sockets.ClientSocket;
  */
 public class ImplementationClient implements ClientInterface {
 
+    /*
+    *Get the message and pick up the order to send it to the clientSocket,
+    *and then we receive the updated message
+     */
     @Override
-  public Message registerClient(Message mensaje) {
-
+    public Message registerClient(Message mensaje) {
         Order ORDER = Order.UP;
-        
         mensaje.setORDER(ORDER);
-
-       ClientSocket socket= new ClientSocket(mensaje);
-       mensaje=socket.vueltaMensaje();
-       
-       return mensaje;
-        
-        
-        
-       
+        ClientSocket socket = new ClientSocket(mensaje);
+        mensaje = socket.vueltaMensaje();
+        return mensaje;
     }
-
- 
 
     @Override
+    /*
+    *Get the message and pick up the order to send it to the clientSocket,
+    *and then we receive the updated message
+     */
     public Message logIn(Message mensaje) {
-
         Order ORDER = Order.IN;
-        
         mensaje.setORDER(ORDER);
-
-       ClientSocket socket= new ClientSocket(mensaje);
-       mensaje=socket.vueltaMensaje();
-       
-       return mensaje;
-        
-        
-        
-       
+        ClientSocket socket = new ClientSocket(mensaje);
+        mensaje = socket.vueltaMensaje();
+        return mensaje;
     }
-    
-    
 }
 //

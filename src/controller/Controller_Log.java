@@ -43,7 +43,6 @@ public class Controller_Log implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        // labelCongrat.setText("Hey quepassss!!!!!!!!!!!!!!");
         btnSignOut.setOnAction(this::hadleButtonSignOut);
 
     }
@@ -60,7 +59,7 @@ public class Controller_Log implements Initializable {
 
     @FXML
     private void hadleButtonSignOut(ActionEvent event) {
-        //Creamos un Nodo para poder salir de la ventana Sign out
+        //Create a Node to be able to exit the Sign out window
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -78,7 +77,7 @@ public class Controller_Log implements Initializable {
     void setUsuario(Client user) {
         this.user = user;
     }
-
+//Show the scene to display with an added Label 
     void initStage(Parent root) {
         Stage stage1 = new Stage();
         labelCongrat= new Label("Congratulations "+this.user.getLogin() +" you are in");
@@ -91,6 +90,7 @@ public class Controller_Log implements Initializable {
         stage1.setScene(scene);
         
         stage1.setTitle("Log In");
+        //modal
         stage1.setResizable(false);
         stage1.initModality(Modality.APPLICATION_MODAL);
         stage1.showAndWait();
