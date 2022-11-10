@@ -99,10 +99,25 @@ public class Controller_In implements Initializable {
         boolean coincide = true;
         Client user = new Client();
         Message respuesta= new Message();
+        if(!txtFieldUser.getText().equalsIgnoreCase("")&&!txtFieldPassword.getText().equalsIgnoreCase("")){
         user.setLogin(txtFieldUser.getText());
         user.setPasswd(txtFieldPassword.getText());
+        
         respuesta.setCliente(user);
         respuesta = saveLogin(respuesta);
+            if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
+            windowsOut(user, event);
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
+            alert.show();
+        }
+        
+        
+        }else{
+             Alert alert = new Alert(Alert.AlertType.ERROR, "Error algun campo esta vacio", ButtonType.OK);
+            alert.show();
+        }
         /**try {
             coincide = matchUserPass(coincide);
         } catch (ValidateUserPass ex) {
@@ -115,13 +130,7 @@ public class Controller_In implements Initializable {
             System.out.println("Error hay espacios");
             Logger.getLogger("Error Hay espacios");
         }
-        if (respuesta.getRESPUESTA().equals(AnswerEnumeration.LOGIN)) {
-            windowsOut(user, event);
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
-            alert.show();
-        }
+    
     }
 
     private boolean noSpace() throws NotAceptSpace {
