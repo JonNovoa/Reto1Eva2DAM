@@ -189,7 +189,7 @@ public class Controller_Up implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Salir");
         alert.setHeaderText(null);
-        alert.setContentText("¿Estas Seguro?");
+        alert.setContentText("Are you sure?");
         Optional opc = alert.showAndWait();
         if (opc.isPresent()) {
             if (opc.get() == ButtonType.OK) {
@@ -234,7 +234,7 @@ public class Controller_Up implements Initializable {
             txtFieldConfrimPassword.setText("");
             alert.showAndWait();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error al crear el usuario ", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "User creation error ", ButtonType.OK);
             alert.show();
         }
     }

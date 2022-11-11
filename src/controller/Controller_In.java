@@ -79,8 +79,8 @@ public class Controller_In implements Initializable {
         stage1.show();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Atención ");
-        alert.setContentText("¿desea salir de la aplicaión?");
+        alert.setTitle("Caution ");
+        alert.setContentText("Do you want close the applicattion?");
         stage1.setOnCloseRequest(e -> {
             alert.showAndWait();
             System.out.println(alert.getResult().getText());
@@ -93,11 +93,9 @@ public class Controller_In implements Initializable {
         });
 
     }
-    //Validates user and password
-
-    @FXML
-    private void hadleButtonSignIn(ActionEvent event) {
-        /**
+    
+    
+       /**
          * No spaces will be accepted neither the password nor the user User can
          * have a maximum of 25 characters and the password can have a maximum
          * of 10 characters. Maximum 25 characters and the password can have a
@@ -116,6 +114,10 @@ public class Controller_In implements Initializable {
          * locked.
          *
          */
+
+    @FXML
+    private void hadleButtonSignIn(ActionEvent event) {
+     
         boolean hayEspacios = true;
         Client user = new Client();
         Message respuesta = new Message();
@@ -138,18 +140,18 @@ public class Controller_In implements Initializable {
 
                 } else {
                     //Alert that the user name or password is Wrong
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Usuarios o contraseña Erroneo ", ButtonType.OK);
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "User or password wrong ", ButtonType.OK);
                     alert.show();
                 }
             } catch (NotAceptSpace ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Error, No Acepta Espacios", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error, spaces are no accepted ", ButtonType.OK);
                 alert.show();
                 Logger.getLogger("Error Hay espacios");
             }
 
         } else {
 //Alert that there is an Empty Space in User or Password
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error algun campo esta vacio", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Some empty field", ButtonType.OK);
             alert.show();
         }
     }
@@ -243,7 +245,7 @@ public class Controller_In implements Initializable {
      * Send the response to the Implementation
      *
      *
-     * @param mensaje Mensaje con Datos
+     * @param respuesta Mensaje con Datos
      * @return Mensaje Devuelve Datos
      *
      */

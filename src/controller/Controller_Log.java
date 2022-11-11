@@ -63,9 +63,9 @@ public class Controller_Log implements Initializable {
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Salir");
+        alert.setTitle("Go out");
         alert.setHeaderText(null);
-        alert.setContentText("¿Estas Seguro?");
+        alert.setContentText("Are you sure?");
         Optional opc= alert.showAndWait();
         if (opc.isPresent()){
             if(opc.get()==ButtonType.OK){

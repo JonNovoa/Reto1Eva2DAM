@@ -130,7 +130,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Check that the error alert is displayed when entering less than 
      * 3 characters
      */
-    /**
+    
      @Test
     public void test2_LoginError1() {
         
@@ -154,7 +154,7 @@ public class Controller_UpTest extends ApplicationTest {
      *  Check that the error alert is displayed when you enter  
      *  a login with spaces
      */
-    /**
+    
      @Test
     public void test3_LoginError2() {
          clickOn("#btnSignUp");
@@ -178,7 +178,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Check that the error alert is displayed when entering a full name with 
      * less than 8 letters
      */
-    /**
+    
  @Test
     public void test4_FullNameError1() {
          clickOn("#btnSignUp");
@@ -200,7 +200,7 @@ public class Controller_UpTest extends ApplicationTest {
     * Check that the error alert is displayed when entering a full name with a full name with
     * containing characters other than letters
     */
-    /**
+    
      @Test
     public void test5_FullNameError2() {
          clickOn("#btnSignUp");
@@ -222,7 +222,7 @@ public class Controller_UpTest extends ApplicationTest {
    * Check that the error alert is displayed if an email is entered without the proper * formatting (without @) 
    * proper formatting (without @)
    */
-    /**
+    
      @Test
     public void test6_GmailError1() {
          clickOn("#btnSignUp");
@@ -245,7 +245,7 @@ public class Controller_UpTest extends ApplicationTest {
    * Check that the error alert is displayed if an email is entered without the proper format (without . 
    * proper formatting (without .)
    */
-    /**
+    
     
       @Test
     public void test7_GmailError2() {
@@ -269,7 +269,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Check that the error alert is displayed if a password is entered.
      * with less than four characters in length
      */
-/**
+
      @Test
     public void test8_PasswordError1() {
          clickOn("#btnSignUp");
@@ -291,7 +291,7 @@ public class Controller_UpTest extends ApplicationTest {
     * Check that the error alert is displayed if a password with * spaces is entered. 
     * spaces
     */
-    /**
+    
     
      @Test
     public void test9_PasswordError2() {
@@ -339,7 +339,7 @@ public class Controller_UpTest extends ApplicationTest {
      * Check that a message is displayed indicating that the user has successfully 
      * registered (check that he/she is not registered in the database). 
      */
-    /**
+    
     @Test
     public void test11_UserCreated1() {
          clickOn("#btnSignUp");
@@ -394,6 +394,7 @@ public class Controller_UpTest extends ApplicationTest {
     
     /**
      * Check that the Gmail is repeated and the alert pops up.
+     * (check that the gmail is in the DB)
      */    
     @Test
     public void test14_GmailExists() {
@@ -414,6 +415,7 @@ public class Controller_UpTest extends ApplicationTest {
     }
     /**
      * Check that the Login is repeated and the alert pops up.
+     * (check that the login is in the DB)
      */
      @Test
     public void test15_LoginExists() {
