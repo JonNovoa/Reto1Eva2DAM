@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.ClientInterface;
 import model.ImplementationClient;
@@ -68,12 +70,28 @@ public class Controller_In implements Initializable {
 //Receive the root and the scene is created
 
     public void initStage(Parent root) {
+
         Scene scene = new Scene(root);
         Stage stage1 = new Stage();
         stage1.setScene(scene);
         stage1.setResizable(false);
         stage1.setTitle("Sign In");
         stage1.show();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Atención ");
+        alert.setContentText("¿desea salir de la aplicaión?");
+        stage1.setOnCloseRequest(e -> {
+            alert.showAndWait();
+            System.out.println(alert.getResult().getText());
+            if (alert.getResult().getText().equalsIgnoreCase("Aceptar")) {
+                closeAplication();
+                stage1.close();
+                Platform.exit();
+            }
+
+        });
+
     }
     //Validates user and password
 
@@ -220,18 +238,26 @@ public class Controller_In implements Initializable {
             }
         });
     }
-/**Send the response to the Implementation
- * 
- * 
- * @param mensaje Mensaje con Datos
- * @return Mensaje Devuelve Datos
-   * 
-    */
+
+    /**
+     * Send the response to the Implementation
+     *
+     *
+     * @param mensaje Mensaje con Datos
+     * @return Mensaje Devuelve Datos
+     *
+     */
     private Message saveLogin(Message respuesta) {
         ClientInterface login = new ImplementationClient();
         respuesta = login.logIn(respuesta);
 
         return respuesta;
+    }
+
+    private void closeAplication() {
+        ClientInterface close = new ImplementationClient();
+        Message message= new Message();
+        close.closeApli(message);
     }
 
 }

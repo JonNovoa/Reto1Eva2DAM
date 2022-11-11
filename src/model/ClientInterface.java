@@ -15,7 +15,6 @@ import clases.Message;
 public interface ClientInterface {
     public Message registerClient(Message respuesta);
     public Message logIn(Message respuesta);
-
-    //public void logIn(Message respuesta2);
+    public void closeApli(Message cerrar);
     
 }

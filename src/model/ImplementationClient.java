@@ -23,6 +23,7 @@ public class ImplementationClient implements ClientInterface {
     public Message registerClient(Message mensaje) {
         Order ORDER = Order.UP;
         mensaje.setORDER(ORDER);
+        mensaje.setCerrar("Sigue");
         ClientSocket socket = new ClientSocket(mensaje);
         mensaje = socket.vueltaMensaje();
         return mensaje;
@@ -36,9 +37,22 @@ public class ImplementationClient implements ClientInterface {
     public Message logIn(Message mensaje) {
         Order ORDER = Order.IN;
         mensaje.setORDER(ORDER);
+        mensaje.setCerrar("Sigue");
         ClientSocket socket = new ClientSocket(mensaje);
         mensaje = socket.vueltaMensaje();
         return mensaje;
+    }
+    
+    /**
+     *
+     * @param mensaje
+     */
+    @Override
+    public void closeApli(Message mensaje){
+        mensaje.setCerrar("exit");
+        ClientSocket socket = new ClientSocket(mensaje);
+
+        
     }
 }
 //
