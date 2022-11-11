@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package application;
+package exceptions;
 
 /**
  *
  * @author somor
  */
-public class Application {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class EmailException extends Exception{
+    
+    public EmailException(){
+        
+    }
+    
+    public EmailException(String msg){
+        super(msg);
     }
     
 }

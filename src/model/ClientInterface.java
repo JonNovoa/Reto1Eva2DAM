@@ -5,10 +5,16 @@
  */
 package model;
 
+import clases.Client;
+import clases.Message;
+
 /**
  *
  * @author somor
  */
 public interface ClientInterface {
+    public Message registerClient(Message respuesta);
+    public Message logIn(Message respuesta);
+    public void closeApli(Message cerrar);
     
 }
