@@ -36,6 +36,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import javafx.stage.Stage;
+import org.junit.Ignore;
 
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.framework.junit.ApplicationTest;
@@ -74,7 +75,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
 
-   /** @Test
+   @Test
     public void test0_Initialize() {
 
         clickOn("#btnSignUp");
@@ -95,36 +96,32 @@ public class Controller_UpTest extends ApplicationTest {
      **/
      
     @Test
+    
     public void test1_SignUpIsEnabled() {
 
         clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
         write("pepe3");
-        verifyThat("#btnSignUp2", isDisabled());
-        verifyThat("#btnCancel", isEnabled());
+
 
         clickOn("#txtFieldFullName");
         write("pepe perez garcia");
-        verifyThat("#btnSignUp2", isDisabled());
-        verifyThat("#btnCancel", isEnabled());
+
 
         clickOn("#txtFieldGmail");
         write("pepe@gmail.com");
-        verifyThat("#btnSignUp2", isDisabled());
-        verifyThat("#btnCancel", isEnabled());
+
 
         clickOn("#txtFieldPassword2");
         write("abcd*1234");
-        verifyThat("#btnSignUp2", isDisabled());
-        verifyThat("#btnCancel", isEnabled());
+
 
         clickOn("#txtFieldConfrimPassword");
         write("abcd*1234");
-
-        verifyThat("#btnCancel", isEnabled());
-
+        
         verifyThat("#btnSignUp2", isEnabled());
-
+        verifyThat("#btnCancel", isEnabled());
+        
     }
     /**
      * Check that the error alert is displayed when entering less than 
@@ -132,6 +129,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
      @Test
+     
     public void test2_LoginError1() {
         
         clickOn("#btnSignUp");
@@ -156,6 +154,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
      @Test
+     
     public void test3_LoginError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -180,6 +179,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
  @Test
+ 
     public void test4_FullNameError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -202,6 +202,7 @@ public class Controller_UpTest extends ApplicationTest {
     */
     
      @Test
+     
     public void test5_FullNameError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -224,6 +225,7 @@ public class Controller_UpTest extends ApplicationTest {
    */
     
      @Test
+     
     public void test6_GmailError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -248,6 +250,7 @@ public class Controller_UpTest extends ApplicationTest {
     
     
       @Test
+      
     public void test7_GmailError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -271,6 +274,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
 
      @Test
+     
     public void test8_PasswordError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -294,6 +298,7 @@ public class Controller_UpTest extends ApplicationTest {
     
     
      @Test
+     
     public void test9_PasswordError2() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -315,9 +320,10 @@ public class Controller_UpTest extends ApplicationTest {
      * Check that the error alert is displayed if it is entered in the confrim
      * password a password different from the passwords
      */
-    /**
+    
     
     @Test
+    
     public void test10_PasswordConfirmError1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -341,6 +347,7 @@ public class Controller_UpTest extends ApplicationTest {
      */
     
     @Test
+    
     public void test11_UserCreated1() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -363,19 +370,20 @@ public class Controller_UpTest extends ApplicationTest {
      * is disabled.
      */
     @Test
+    
     public void test12_EmptyEspaces() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
-         write(" ");
+         write("");
         clickOn("#txtFieldFullName");
-        write(" ");
+        write("");
          clickOn("#txtFieldGmail");
-        write(" ");
+        write("");
         clickOn("#txtFieldPassword2");
-       write(" ");
+       write("");
         clickOn("#txtFieldConfrimPassword");
-         write(" ");
-        clickOn("#btnSignUp2");  
+         write("");
+        //clickOn("#btnSignUp2");  
         verifyThat("#btnSignUp2", isDisabled());  
     }
     
@@ -385,6 +393,7 @@ public class Controller_UpTest extends ApplicationTest {
      * the sign in window.
      */
      @Test
+     
     public void test13_GTSignIn() {
         clickOn("#btnSignUp");
         clickOn("#btnCancel");  
@@ -397,6 +406,7 @@ public class Controller_UpTest extends ApplicationTest {
      * (check that the gmail is in the DB)
      */    
     @Test
+    
     public void test14_GmailExists() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -418,6 +428,7 @@ public class Controller_UpTest extends ApplicationTest {
      * (check that the login is in the DB)
      */
      @Test
+     
     public void test15_LoginExists() {
          clickOn("#btnSignUp");
         clickOn("#txtFieldLogin");
@@ -439,6 +450,7 @@ public class Controller_UpTest extends ApplicationTest {
      *	and then clicking on cancel
      */
      @Test
+     
     public void test16_Stay() {
         clickOn("#btnSignUp");
         clickOn("#btnCancel");  

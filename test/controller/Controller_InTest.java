@@ -45,7 +45,7 @@ public class Controller_InTest extends ApplicationTest {
          verifyThat("#txtFieldUser", hasText(""));
          verifyThat("#txtFieldPassword", hasText(""));
          verifyThat("#btnSignIn", isEnabled());
-       verifyThat("#btnSignUp", isEnabled());
+         verifyThat("#btnSignUp", isEnabled());
     }
     
     /**
@@ -69,6 +69,7 @@ public class Controller_InTest extends ApplicationTest {
         write("noexiste");
         clickOn("#txtFieldPassword");
         write("abcd*1234");
+        
         clickOn("#btnSignIn");
         verifyThat(".alert", isVisible());
         clickOn(isDefaultButton());
