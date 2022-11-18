@@ -20,8 +20,8 @@ import java.util.logging.Logger;
  */
 public class ClientSocket {
 
-    static final String HOST = ResourceBundle.getBundle("clases.connection").getString("host");
-    static final Integer PUERTO = Integer.parseInt(ResourceBundle.getBundle("clases.connection").getString("puerto"));
+    static final String HOST = "localhost";
+    static final Integer PUERTO = 5000;
     //private persona per = null;
     private Message mensajeSalida;
 

@@ -171,7 +171,7 @@ public class Controller_Up implements Initializable {
             labelPasswordError.setStyle("-fx-text-fill:RED");
         } catch (PasswordConfirmException ex) {
             logMsg.log(Level.INFO, "confirm password incorrecto");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "\"Password Confirm error\nMust be: \n equals to Password", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Password Confirm error\nMust be: \n equals to Password", ButtonType.OK);
             alert.show();
             labelPasswordLoginError.setStyle("-fx-text-fill:RED");
         }
