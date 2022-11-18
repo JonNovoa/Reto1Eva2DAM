@@ -6,9 +6,11 @@ package sockets;
  * and open the template in the editor.
  */
 import clases.Message;
+import exceptions.NotConnectedServer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,13 +21,13 @@ import java.util.logging.Logger;
  * @author somor
  */
 public class ClientSocket {
-
+    private static final Logger logMsg = Logger.getLogger("");
     static final String HOST = ResourceBundle.getBundle("clases.connection").getString("host");
     static final Integer PUERTO = Integer.parseInt(ResourceBundle.getBundle("clases.connection").getString("puerto"));
     //private persona per = null;
     private Message mensajeSalida;
 
-    public ClientSocket(Message mensaje) {
+    public ClientSocket(Message mensaje) throws ConnectException{
         Socket skCliente = null;
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
@@ -42,9 +44,14 @@ public class ClientSocket {
             oos.writeObject(mensaje);
             //Read Server Message
             this.mensajeSalida = (Message) ois.readObject();
-        } catch (IOException ex) {
+            
+        }catch(ConnectException ex){
+             logMsg.log(Level.INFO, "login incorrecto ");
+        
+            } catch (IOException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        
+            }catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -55,10 +62,11 @@ public class ClientSocket {
             } catch (IOException ex) {
                 Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
             }
+           
         }
     }
 
-    public Message vueltaMensaje() {
+    public Message vueltaMensaje() throws ConnectException{
         //Returns message Output
         return this.mensajeSalida;
 

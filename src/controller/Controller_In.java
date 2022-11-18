@@ -8,6 +8,7 @@ import clases.AnswerEnumeration;
 import clases.Client;
 import clases.Message;
 import exceptions.NotAceptSpace;
+import exceptions.NotConnectedServer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -140,7 +141,7 @@ public class Controller_In implements Initializable {
 
                 } else {
                     //Alert that the user name or password is Wrong
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "User or password wrong ", ButtonType.OK);
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "User or password wrong", ButtonType.OK);
                     alert.show();
                 }
             } catch (NotAceptSpace ex) {
@@ -250,16 +251,21 @@ public class Controller_In implements Initializable {
      *
      */
     private Message saveLogin(Message respuesta) {
-        ClientInterface login = new ImplementationClient();
-        respuesta = login.logIn(respuesta);
-
-        return respuesta;
+        
+            ClientInterface login = new ImplementationClient();
+            respuesta = login.logIn(respuesta);
+            
+          
+       
+          return respuesta;
     }
 
     private void closeAplication() {
-        ClientInterface close = new ImplementationClient();
-        Message message= new Message();
-        close.closeApli(message);
+        
+            ClientInterface close = new ImplementationClient();
+            Message message= new Message();
+            close.closeApli(message);
+       
     }
 
 }

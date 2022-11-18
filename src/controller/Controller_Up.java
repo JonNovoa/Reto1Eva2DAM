@@ -11,6 +11,7 @@ import clases.Message;
 import exceptions.*;
 import exceptions.FullNameException;
 import exceptions.LoginException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -217,7 +218,7 @@ public class Controller_Up implements Initializable {
         labelPasswordLoginError.setStyle("-fx-text-fill:TRANSPARENT");
     }
 
-    private void createUser() {
+    private void createUser(){
         ClientInterface cliInter = new ImplementationClient();
         Message respuesta = new Message();
         Client cli = new Client();
@@ -268,15 +269,17 @@ public class Controller_Up implements Initializable {
     private void checkFullName() throws FullNameException {
         int letras = 0;
         String nombre = txtFieldFullName.getText();
-        Pattern pattern = Pattern.compile("^[A-Za-z ]{0,50}$");
+        Pattern pattern = Pattern.compile("^[a-zA-ZÀ-ÿ\\u00f1\\u00d1]+(\\s*[a-zA-ZÀ-ÿ\\u00f1\\u00d1]*)*[a-zA-ZÀ-ÿ\\u00f1\\u00d1]$");
         Matcher macther = pattern.matcher(nombre);
         for (int i = 0; i < nombre.length(); i++) {
             if (nombre.charAt(i) != ' ') {
                 letras++;
+              
             }
         }
-        if (letras < 8 || macther.find() == false) {
-            throw new FullNameException();
+        if ( nombre.length()<=7 || macther.find() == false) {
+           throw new FullNameException();
+            
         }
     }
 

@@ -9,6 +9,7 @@ import application.Main;
 import java.awt.TextField;
 import javafx.stage.Stage;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -39,6 +40,7 @@ public class Controller_InTest extends ApplicationTest {
      * Check that the Login and Password fields are empty at startup and that the Sign Up and Sign In buttons are empty
      * and that the Sign Up and Sign In buttons are Enabled.
      */
+    @Ignore
     @Test
     public void test1_InitialState() {
         
@@ -69,8 +71,9 @@ public class Controller_InTest extends ApplicationTest {
         write("noexiste");
         clickOn("#txtFieldPassword");
         write("abcd*1234");
+        
         clickOn("#btnSignIn");
-        verifyThat(".alert", isVisible());
+        verifyThat("User or password wrong", isVisible());
         clickOn(isDefaultButton());
     }
     
@@ -84,7 +87,7 @@ public class Controller_InTest extends ApplicationTest {
         clickOn("#txtFieldPassword");
         write("abcd*12345");
         clickOn("#btnSignIn");
-        verifyThat(".alert", isVisible());
+        verifyThat("User or password wrong", isVisible());
         clickOn(isDefaultButton());
     }
     
@@ -94,12 +97,15 @@ public class Controller_InTest extends ApplicationTest {
     @Test
     public void test5_EmptyFields(){
         clickOn("#btnSignIn");
-        verifyThat(".alert", isVisible());
+        verifyThat("Some empty field", isVisible());
         clickOn(isDefaultButton());
     }
+    
+    
     /**
      * Check that the Log in is successful and the Sign Out window opens.
      */
+     @Ignore
     @Test
     public void test6_GTSignOut(){
         clickOn("#txtFieldUser");
